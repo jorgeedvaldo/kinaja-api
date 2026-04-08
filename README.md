@@ -61,7 +61,7 @@
 
 ```bash
 # 1. Clone the repository / Clonar o repositório
-git clone <repository-url> kinaja-api
+git clone https://github.com/jorgeedvaldo/kinaja-api.git
 cd kinaja-api
 
 # 2. Install dependencies / Instalar dependências
@@ -1062,6 +1062,6 @@ php artisan optimize:clear
 
 ---
 
-**Built with ❤️ using Laravel 9 & Sanctum**
+**Built with ❤️ using Laravel 9 & Sanctum | Developed by [jorgeedvaldo](https://github.com/jorgeedvaldo)**
 
-**Construído com ❤️ usando Laravel 9 & Sanctum**
+**Construído com ❤️ usando Laravel 9 & Sanctum | Desenvolvido por [jorgeedvaldo](https://github.com/jorgeedvaldo)**
