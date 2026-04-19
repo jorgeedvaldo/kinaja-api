@@ -37,6 +37,9 @@ class OrderController extends Controller
         $request->validate([
             'restaurant_id' => 'required|exists:restaurants,id',
             'delivery_fee'  => 'required|numeric|min:0',
+            'delivery_address' => 'nullable|string',
+            'latitude' => 'nullable|numeric',
+            'longitude' => 'nullable|numeric',
             'items'         => 'required|array|min:1',
             'items.*.product_id' => 'required|exists:products,id',
             'items.*.quantity'   => 'required|integer|min:1',
@@ -67,6 +70,9 @@ class OrderController extends Controller
                 'total_amount'  => $totalAmount,
                 'delivery_fee'  => $request->delivery_fee,
                 'status'        => 'pending',
+                'delivery_address' => $request->delivery_address,
+                'latitude'      => $request->latitude,
+                'longitude'     => $request->longitude,
             ]);
 
             $order->items()->createMany($orderItems);

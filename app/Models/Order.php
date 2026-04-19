@@ -23,6 +23,9 @@ class Order extends Model
         'total_amount',
         'delivery_fee',
         'status',
+        'delivery_address',
+        'latitude',
+        'longitude',
     ];
 
     /**
