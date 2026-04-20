@@ -183,7 +183,7 @@ POST /api/login
 Content-Type: application/json
 
 {
-    "phone": "+244923456789",
+    "identifier": "+244923456789",  // Phone or email / Telefone ou email
     "password": "password123"
 }
 ```
@@ -238,6 +238,9 @@ As migrations devem correr nesta ordem exata de dependência:
 | 8 | `2026_04_08_000004_create_products_table.php` | `products` | `restaurants`, `categories` |
 | 9 | `2026_04_08_000005_create_orders_table.php` | `orders` | `users`, `restaurants`, `drivers` |
 | 10 | `2026_04_08_000006_create_order_items_table.php` | `order_items` | `orders`, `products` |
+| 11 | `2026_04_20_000000_add_location_to_orders_table.php` | `orders` (mod) | `orders` |
+
+---
 
 ---
 
@@ -358,6 +361,9 @@ Pedidos de clientes ligando cliente, restaurante e entregador.
 | `total_amount` | `decimal(10,2)` | required | Total order amount (products) | Valor total do pedido (produtos) |
 | `delivery_fee` | `decimal(10,2)` | default: `0` | Delivery fee charged | Taxa de entrega cobrada |
 | `status` | `enum` | default: `'pending'` | Current order status | Estado atual do pedido |
+| `delivery_address` | `string` | nullable | Delivery address | Endereço de entrega |
+| `latitude` | `decimal(10,8)` | nullable | GPS Latitude | Latitude GPS |
+| `longitude` | `decimal(11,8)` | nullable | GPS Longitude | Longitude GPS |
 | `created_at` | `timestamp` | auto | Record creation time | Data de criação |
 | `updated_at` | `timestamp` | auto | Record update time | Data de atualização |
 
@@ -671,7 +677,7 @@ $user->isRestaurantOwner();  // Returns true if role === 'restaurant_owner'
 
 | Method | Endpoint | Description (EN) | Descrição (PT) | Role |
 |--------|----------|------------------|----------------|------|
-| `GET` | `/restaurants` | List all open restaurants | Listar restaurantes abertos | `client` |
+| `GET` | `/restaurants` | List all open restaurants (optional `category_id` filter) | Listar restaurantes abertos (filtro `category_id` opcional) | `client` |
 | `GET` | `/restaurants/{id}` | Get restaurant details + menu | Detalhes do restaurante + menu | `client` |
 | `POST` | `/restaurants` | Create a new restaurant | Criar novo restaurante | `restaurant_owner` |
 | `PUT` | `/restaurants/{id}` | Update restaurant details | Atualizar detalhes do restaurante | `restaurant_owner` |
@@ -739,6 +745,9 @@ Content-Type: application/json
 {
     "restaurant_id": 1,
     "delivery_fee": 500.00,
+    "delivery_address": "Rua 4, Centralidade do Kilamba",
+    "latitude": -8.995,
+    "longitude": 13.250,
     "items": [
         {
             "product_id": 3,
@@ -765,6 +774,9 @@ Content-Type: application/json
         "total_amount": "3500.00",
         "delivery_fee": "500.00",
         "status": "pending",
+        "delivery_address": "Rua 4, Centralidade do Kilamba",
+        "latitude": -8.99500000,
+        "longitude": 13.25000000,
         "created_at": "2026-04-08T19:30:00.000000Z",
         "updated_at": "2026-04-08T19:30:00.000000Z",
         "items": [
