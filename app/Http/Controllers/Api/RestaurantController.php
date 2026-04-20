@@ -11,10 +11,17 @@ class RestaurantController extends Controller
     /**
      * Display a listing of open restaurants.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $restaurants = Restaurant::where('is_open', true)
-            ->with(['products' => function($query) {
+        $query = Restaurant::where('is_open', true);
+
+        if ($request->has('category_id') && $request->category_id) {
+            $query->whereHas('products', function($q) use ($request) {
+                $q->where('category_id', $request->category_id);
+            });
+        }
+
+        $restaurants = $query->with(['products' => function($query) {
                 $query->where('is_available', true)->take(5);
             }])
             ->get();
