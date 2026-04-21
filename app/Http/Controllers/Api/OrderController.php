@@ -108,8 +108,9 @@ class OrderController extends Controller
         $user = $request->user();
         $isOwner = $user->isRestaurantOwner() && $user->restaurants()->where('id', $order->restaurant_id)->exists();
         $isAdmin = $user->isAdmin();
+        $isAssignedDriver = $user->isDriver() && $user->driver && $order->driver_id === $user->driver->id;
         
-        if (!$isOwner && !$isAdmin) {
+        if (!$isOwner && !$isAdmin && !$isAssignedDriver) {
             return response()->json(['message' => 'Unauthorized to manually update status'], 403);
         }
 
