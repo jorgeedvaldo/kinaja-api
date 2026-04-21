@@ -7,7 +7,7 @@
     <meta name="description" content="Painel de administração Kinajá para gestão de restaurantes, pedidos e utilizadores.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('admin/css/admin.css') }}">
+    <link rel="stylesheet" href="{{ asset('admin_assets/css/admin.css') }}">
 </head>
 <body>
 
@@ -98,6 +98,6 @@
 <!-- Toast -->
 <div class="toast-container" id="toast-container"></div>
 
-<script src="{{ asset('admin/js/admin.js') }}"></script>
+<script src="{{ asset('admin_assets/js/admin.js') }}"></script>
 </body>
 </html>
