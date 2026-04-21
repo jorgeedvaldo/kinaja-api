@@ -84,13 +84,16 @@ class OrderController extends Controller
     /**
      * Display order details.
      */
-    public function show(Order $order)
+    public function show(Request $request, Order $order)
     {
-        $user = request()->user();
+        $user = $request->user();
         
-        $isClient = $user->id === $order->client_id;
+        $isClient = $user->id == $order->client_id;
         $isOwner  = $user->isRestaurantOwner() && $user->restaurants()->where('id', $order->restaurant_id)->exists();
-        $isDriver = $user->isDriver() && $user->driver && $order->driver_id === $user->driver->id;
+        $isDriver = $user->isDriver() && $user->driver && (
+            $order->driver_id == $user->driver->id || 
+            ($order->status === 'ready' && is_null($order->driver_id))
+        );
         $isAdmin  = $user->isAdmin();
 
         if (!$isClient && !$isOwner && !$isDriver && !$isAdmin) {
@@ -108,7 +111,7 @@ class OrderController extends Controller
         $user = $request->user();
         $isOwner = $user->isRestaurantOwner() && $user->restaurants()->where('id', $order->restaurant_id)->exists();
         $isAdmin = $user->isAdmin();
-        $isAssignedDriver = $user->isDriver() && $user->driver && $order->driver_id === $user->driver->id;
+        $isAssignedDriver = $user->isDriver() && $user->driver && $order->driver_id == $user->driver->id;
         
         if (!$isOwner && !$isAdmin && !$isAssignedDriver) {
             return response()->json(['message' => 'Unauthorized to manually update status'], 403);
@@ -129,7 +132,7 @@ class OrderController extends Controller
     public function cancel(Request $request, Order $order)
     {
         $user = $request->user();
-        $isClient = $user->id === $order->client_id && $order->status === 'pending';
+        $isClient = $user->id == $order->client_id && $order->status === 'pending';
         $isOwner  = $user->isRestaurantOwner() && $user->restaurants()->where('id', $order->restaurant_id)->exists();
         $isAdmin  = $user->isAdmin();
 
