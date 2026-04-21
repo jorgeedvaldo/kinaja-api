@@ -305,20 +305,7 @@ window.updateOrderStatus = async function (id, status) {
 
 // ——— Restaurants ———
 async function renderRestaurants(area) {
-  let restaurants;
-  if (isAdmin()) {
-    // Get all from admin orders endpoint and extract unique restaurants, or use a workaround
-    const allOrders = await get('/admin/orders');
-    const map = {};
-    allOrders.forEach(o => { if (o.restaurant) map[o.restaurant.id] = o.restaurant; });
-    // Additionally get open ones
-    const open = await get('/restaurants');
-    open.forEach(r => map[r.id] = r);
-    restaurants = Object.values(map);
-  } else {
-    // Owner sees their own - get via the restaurants list
-    restaurants = await get('/restaurants');
-  }
+  let restaurants = await get('/admin/restaurants');
 
   area.innerHTML = `
     <div class="table-card">
@@ -388,7 +375,7 @@ window.deleteRestaurant = async function (id) {
 
 // ——— Products ———
 async function renderProducts(area) {
-  let restaurants = await get('/restaurants');
+  let restaurants = await get('/admin/restaurants');
   if (!restaurants.length) { area.innerHTML = '<div class="loading-center"><p class="text-muted">Nenhum restaurante encontrado. Crie um restaurante primeiro.</p></div>'; return; }
 
   area.innerHTML = `

@@ -57,6 +57,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::patch('/driver/orders/{order}/accept', [DriverController::class, 'acceptOrder']);
 
     // Admin
+    Route::get('/admin/restaurants', [AdminController::class, 'restaurants']);
     Route::get('/admin/users', [AdminController::class, 'users']);
     Route::get('/admin/orders', [AdminController::class, 'orders']);
     Route::get('/admin/dashboard', [AdminController::class, 'dashboard']);

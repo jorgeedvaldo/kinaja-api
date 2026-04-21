@@ -41,4 +41,16 @@ class AdminController extends Controller
             'recent_orders' => Order::with(['client', 'restaurant'])->latest()->take(5)->get()
         ]);
     }
+
+    /**
+     * List all restaurants for admin panel (scoped by owner)
+     */
+    public function restaurants(Request $request)
+    {
+        if ($request->user()->isAdmin()) {
+            return response()->json(Restaurant::all());
+        }
+        
+        return response()->json($request->user()->restaurants);
+    }
 }

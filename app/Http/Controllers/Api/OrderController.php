@@ -86,12 +86,15 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
-        // Simple authorization check
         $user = request()->user();
-        if ($user->id !== $order->client_id && 
-            !$user->isAdmin() && 
-            ($user->isRestaurantOwner() && $order->restaurant->user_id !== $user->id)) {
-            return response()->json(['message' => 'Unauthorized'], 403);
+        
+        $isClient = $user->id === $order->client_id;
+        $isOwner  = $user->isRestaurantOwner() && $user->restaurants()->where('id', $order->restaurant_id)->exists();
+        $isDriver = $user->isDriver() && $user->driver && $order->driver_id === $user->driver->id;
+        $isAdmin  = $user->isAdmin();
+
+        if (!$isClient && !$isOwner && !$isDriver && !$isAdmin) {
+            return response()->json(['message' => 'Unauthorized access to order'], 403);
         }
 
         return response()->json($order->load(['restaurant', 'items.product', 'driver.user', 'client']));
@@ -102,6 +105,14 @@ class OrderController extends Controller
      */
     public function updateStatus(Request $request, Order $order)
     {
+        $user = $request->user();
+        $isOwner = $user->isRestaurantOwner() && $user->restaurants()->where('id', $order->restaurant_id)->exists();
+        $isAdmin = $user->isAdmin();
+        
+        if (!$isOwner && !$isAdmin) {
+            return response()->json(['message' => 'Unauthorized to manually update status'], 403);
+        }
+
         $request->validate([
             'status' => 'required|string|in:accepted,preparing,ready,in_transit,delivered,cancelled',
         ]);
@@ -114,8 +125,17 @@ class OrderController extends Controller
     /**
      * Cancel an order.
      */
-    public function cancel(Order $order)
+    public function cancel(Request $request, Order $order)
     {
+        $user = $request->user();
+        $isClient = $user->id === $order->client_id && $order->status === 'pending';
+        $isOwner  = $user->isRestaurantOwner() && $user->restaurants()->where('id', $order->restaurant_id)->exists();
+        $isAdmin  = $user->isAdmin();
+
+        if (!$isClient && !$isOwner && !$isAdmin) {
+            return response()->json(['message' => 'Unauthorized to cancel this order'], 403);
+        }
+
         if ($order->status === 'delivered') {
             return response()->json(['message' => 'Cannot cancel a delivered order'], 422);
         }
