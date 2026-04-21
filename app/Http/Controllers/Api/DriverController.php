@@ -49,8 +49,8 @@ class DriverController extends Controller
     public function updateLocation(Request $request)
     {
         $request->validate([
-            'lat' => 'required|numeric',
-            'lng' => 'required|numeric',
+            'current_lat' => 'required|numeric',
+            'current_lng' => 'required|numeric',
         ]);
 
         $driver = $request->user()->driver;
@@ -60,8 +60,8 @@ class DriverController extends Controller
         }
 
         $driver->update([
-            'current_lat' => $request->lat,
-            'current_lng' => $request->lng,
+            'current_lat' => $request->current_lat,
+            'current_lng' => $request->current_lng,
         ]);
 
         return response()->json(['message' => 'Location updated']);
