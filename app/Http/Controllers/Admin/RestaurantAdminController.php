@@ -47,7 +47,7 @@ class RestaurantAdminController extends Controller
     public function edit(Request $request, Restaurant $restaurant)
     {
         $user = $request->user();
-        if (!$user->isAdmin() && $user->id !== $restaurant->user_id) {
+        if (!$user->isAdmin() && $user->id != $restaurant->user_id) {
             abort(403, 'Não autorizado.');
         }
 
@@ -57,7 +57,7 @@ class RestaurantAdminController extends Controller
     public function update(Request $request, Restaurant $restaurant)
     {
         $user = $request->user();
-        if (!$user->isAdmin() && $user->id !== $restaurant->user_id) {
+        if (!$user->isAdmin() && $user->id != $restaurant->user_id) {
             abort(403, 'Não autorizado.');
         }
 
@@ -80,7 +80,7 @@ class RestaurantAdminController extends Controller
     public function destroy(Request $request, Restaurant $restaurant)
     {
         $user = $request->user();
-        if (!$user->isAdmin() && $user->id !== $restaurant->user_id) {
+        if (!$user->isAdmin() && $user->id != $restaurant->user_id) {
             abort(403, 'Não autorizado.');
         }
 

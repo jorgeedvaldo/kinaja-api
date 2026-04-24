@@ -94,7 +94,8 @@ class ProductAdminController extends Controller
     public function edit(Request $request, Product $product)
     {
         $user = $request->user();
-        if (!$user->isAdmin() && $user->id !== $product->restaurant->user_id) {
+        $restaurant = $product->restaurant;
+        if (!$user->isAdmin() && (!$restaurant || $user->id != $restaurant->user_id)) {
             abort(403, 'Não autorizado.');
         }
 
@@ -117,7 +118,8 @@ class ProductAdminController extends Controller
     public function update(Request $request, Product $product)
     {
         $user = $request->user();
-        if (!$user->isAdmin() && $user->id !== $product->restaurant->user_id) {
+        $restaurant = $product->restaurant;
+        if (!$user->isAdmin() && (!$restaurant || $user->id != $restaurant->user_id)) {
             abort(403, 'Não autorizado.');
         }
 
@@ -150,7 +152,8 @@ class ProductAdminController extends Controller
     public function destroy(Request $request, Product $product)
     {
         $user = $request->user();
-        if (!$user->isAdmin() && $user->id !== $product->restaurant->user_id) {
+        $restaurant = $product->restaurant;
+        if (!$user->isAdmin() && (!$restaurant || $user->id != $restaurant->user_id)) {
             abort(403, 'Não autorizado.');
         }
 
