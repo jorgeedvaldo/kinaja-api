@@ -13,9 +13,7 @@ class AdminAuthController extends Controller
      */
     public function showLoginForm()
     {
-        if (Auth::check() && in_array(Auth::user()->role, ['admin', 'restaurant_owner'])) {
-            return redirect()->route('admin.dashboard');
-        }
+        // Redirection is handled by the 'guest' middleware and RedirectIfAuthenticated.
 
         return view('admin.auth.login');
     }

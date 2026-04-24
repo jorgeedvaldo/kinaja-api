@@ -23,7 +23,12 @@ class RedirectIfAuthenticated
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                return redirect(RouteServiceProvider::HOME);
+                $user = Auth::guard($guard)->user();
+                if (in_array($user->role, ['admin', 'restaurant_owner'])) {
+                    return redirect()->route('admin.dashboard');
+                }
+                // Fallback for regular users (if any) or if no specific route exists yet
+                return redirect('/');
             }
         }
 
