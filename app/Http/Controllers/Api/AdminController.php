@@ -11,26 +11,38 @@ use Illuminate\Http\Request;
 class AdminController extends Controller
 {
     /**
-     * List all users.
+     * List all users (admin only).
      */
-    public function users()
+    public function users(Request $request)
     {
+        if (!$request->user()->isAdmin()) {
+            return response()->json(['message' => 'Acesso restrito a administradores.'], 403);
+        }
+
         return response()->json(User::with(['driver', 'restaurants'])->latest()->get());
     }
 
     /**
-     * List all orders in the system.
+     * List all orders in the system (admin only).
      */
-    public function orders()
+    public function orders(Request $request)
     {
+        if (!$request->user()->isAdmin()) {
+            return response()->json(['message' => 'Acesso restrito a administradores.'], 403);
+        }
+
         return response()->json(Order::with(['client', 'restaurant', 'driver.user'])->latest()->get());
     }
 
     /**
-     * Get dashboard statistics.
+     * Get dashboard statistics (admin only).
      */
-    public function dashboard()
+    public function dashboard(Request $request)
     {
+        if (!$request->user()->isAdmin()) {
+            return response()->json(['message' => 'Acesso restrito a administradores.'], 403);
+        }
+
         return response()->json([
             'stats' => [
                 'total_users'       => User::count(),
@@ -43,14 +55,18 @@ class AdminController extends Controller
     }
 
     /**
-     * List all restaurants for admin panel (scoped by owner)
+     * List restaurants — admin sees all, owner sees own.
      */
     public function restaurants(Request $request)
     {
         if ($request->user()->isAdmin()) {
             return response()->json(Restaurant::all());
         }
-        
-        return response()->json($request->user()->restaurants);
+
+        if ($request->user()->isRestaurantOwner()) {
+            return response()->json($request->user()->restaurants);
+        }
+
+        return response()->json(['message' => 'Acesso não autorizado.'], 403);
     }
 }

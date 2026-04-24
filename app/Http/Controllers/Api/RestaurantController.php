@@ -34,7 +34,11 @@ class RestaurantController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        if (!$request->user()->isRestaurantOwner() && !$request->user()->isAdmin()) {
+            return response()->json(['message' => 'Apenas donos de restaurantes podem criar restaurantes.'], 403);
+        }
+
+        $validated = $request->validate([
             'name'           => 'required|string|max:255',
             'cuisine_type'   => 'nullable|string|max:255',
             'cover_image'    => 'nullable|string',
@@ -42,7 +46,7 @@ class RestaurantController extends Controller
             'is_open'        => 'boolean',
         ]);
 
-        $restaurant = $request->user()->restaurants()->create($request->all());
+        $restaurant = $request->user()->restaurants()->create($validated);
 
         return response()->json($restaurant, 201);
     }
@@ -62,12 +66,11 @@ class RestaurantController extends Controller
      */
     public function update(Request $request, Restaurant $restaurant)
     {
-        // Simple check to ensure owner is updating
         if ($request->user()->id !== $restaurant->user_id && ! $request->user()->isAdmin()) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
 
-        $request->validate([
+        $validated = $request->validate([
             'name'           => 'sometimes|required|string|max:255',
             'cuisine_type'   => 'nullable|string|max:255',
             'cover_image'    => 'nullable|string',
@@ -75,7 +78,7 @@ class RestaurantController extends Controller
             'is_open'        => 'boolean',
         ]);
 
-        $restaurant->update($request->all());
+        $restaurant->update($validated);
 
         return response()->json($restaurant);
     }

@@ -26,7 +26,7 @@ class ProductController extends Controller
             return response()->json(['message' => 'Unauthorized'], 403);
         }
 
-        $request->validate([
+        $validated = $request->validate([
             'category_id'  => 'required|exists:categories,id',
             'name'         => 'required|string|max:255',
             'description'  => 'nullable|string',
@@ -35,7 +35,7 @@ class ProductController extends Controller
             'is_available' => 'boolean',
         ]);
 
-        $product = $restaurant->products()->create($request->all());
+        $product = $restaurant->products()->create($validated);
 
         return response()->json($product, 201);
     }
@@ -50,7 +50,7 @@ class ProductController extends Controller
             return response()->json(['message' => 'Unauthorized'], 403);
         }
 
-        $request->validate([
+        $validated = $request->validate([
             'category_id'  => 'sometimes|required|exists:categories,id',
             'name'         => 'sometimes|required|string|max:255',
             'description'  => 'nullable|string',
@@ -59,7 +59,7 @@ class ProductController extends Controller
             'is_available' => 'boolean',
         ]);
 
-        $product->update($request->all());
+        $product->update($validated);
 
         return response()->json($product);
     }

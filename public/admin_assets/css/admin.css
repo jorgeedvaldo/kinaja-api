@@ -907,3 +907,46 @@ tbody tr:last-child td { border-bottom: none; }
   padding: 24px;
   margin-bottom: 24px;
 }
+
+/* ═══ FLASH MESSAGES (Blade) ═══ */
+.toast-flash {
+  padding: 12px 20px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 16px;
+  animation: toastIn .3s ease;
+  transition: opacity .3s ease;
+}
+.toast-flash.success { background: #D1FAE5; color: #065F46; border: 1px solid #A7F3D0; }
+.toast-flash.error { background: #FEE2E2; color: #991B1B; border: 1px solid #FECACA; }
+
+/* ═══ PAGINATION ═══ */
+.pagination {
+  display: flex;
+  list-style: none;
+  gap: 4px;
+  flex-wrap: wrap;
+  padding: 0;
+  margin: 0;
+}
+.pagination li {}
+.pagination .page-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 36px;
+  height: 36px;
+  padding: 0 10px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-sec);
+  text-decoration: none;
+  border: 1px solid var(--border-med);
+  background: var(--surface);
+  transition: all var(--transition);
+}
+.pagination .page-link:hover { border-color: var(--primary); color: var(--primary); }
+.pagination .active .page-link { background: var(--primary); color: #fff; border-color: var(--primary); }
+.pagination .disabled .page-link { opacity: .4; pointer-events: none; }

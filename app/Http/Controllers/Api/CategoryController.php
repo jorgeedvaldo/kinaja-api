@@ -29,9 +29,13 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate(['name' => 'required|string|unique:categories,name|max:255']);
+        if (!$request->user()->isAdmin()) {
+            return response()->json(['message' => 'Apenas administradores podem criar categorias.'], 403);
+        }
 
-        $category = Category::create($request->all());
+        $validated = $request->validate(['name' => 'required|string|unique:categories,name|max:255']);
+
+        $category = Category::create($validated);
 
         return response()->json($category, 201);
     }
@@ -41,9 +45,13 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        $request->validate(['name' => 'required|string|unique:categories,name,' . $category->id . '|max:255']);
+        if (!$request->user()->isAdmin()) {
+            return response()->json(['message' => 'Apenas administradores podem editar categorias.'], 403);
+        }
 
-        $category->update($request->all());
+        $validated = $request->validate(['name' => 'required|string|unique:categories,name,' . $category->id . '|max:255']);
+
+        $category->update($validated);
 
         return response()->json($category);
     }
@@ -51,8 +59,12 @@ class CategoryController extends Controller
     /**
      * Remove the specified category from storage.
      */
-    public function destroy(Category $category)
+    public function destroy(Request $request, Category $category)
     {
+        if (!$request->user()->isAdmin()) {
+            return response()->json(['message' => 'Apenas administradores podem apagar categorias.'], 403);
+        }
+
         $category->delete();
 
         return response()->json(null, 204);
