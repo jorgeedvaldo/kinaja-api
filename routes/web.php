@@ -19,6 +19,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/linkstorage', function () {
+    Artisan::call('storage:link');
+    return "Storage linked";
+});
+
 // ─── Admin Auth (guest) ────────────────────────────────────────
 Route::middleware('guest')->group(function () {
     Route::get('/admin/login', [AdminAuthController::class, 'showLoginForm'])->name('admin.login');
