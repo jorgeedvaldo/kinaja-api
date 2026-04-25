@@ -14,7 +14,14 @@ class ProductController extends Controller
      */
     public function index(Restaurant $restaurant)
     {
-        return response()->json($restaurant->products()->with('category')->get());
+        $products = $restaurant->products()->with('category')->get();
+
+        $products->transform(function ($product) {
+            $product->image = config('app.url') . $product->image;
+            return $product;
+        });
+
+        return response()->json($products);
     }
 
     /**
@@ -22,16 +29,16 @@ class ProductController extends Controller
      */
     public function store(Request $request, Restaurant $restaurant)
     {
-        if ($request->user()->id !== $restaurant->user_id && ! $request->user()->isAdmin()) {
+        if ($request->user()->id !== $restaurant->user_id && !$request->user()->isAdmin()) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
 
         $validated = $request->validate([
-            'category_id'  => 'required|exists:categories,id',
-            'name'         => 'required|string|max:255',
-            'description'  => 'nullable|string',
-            'price'        => 'required|numeric|min:0',
-            'image'        => 'nullable|string',
+            'category_id' => 'required|exists:categories,id',
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'price' => 'required|numeric|min:0',
+            'image' => 'nullable|string',
             'is_available' => 'boolean',
         ]);
 
@@ -46,16 +53,16 @@ class ProductController extends Controller
     public function update(Request $request, Product $product)
     {
         $restaurant = $product->restaurant;
-        if ($request->user()->id !== $restaurant->user_id && ! $request->user()->isAdmin()) {
+        if ($request->user()->id !== $restaurant->user_id && !$request->user()->isAdmin()) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
 
         $validated = $request->validate([
-            'category_id'  => 'sometimes|required|exists:categories,id',
-            'name'         => 'sometimes|required|string|max:255',
-            'description'  => 'nullable|string',
-            'price'        => 'sometimes|required|numeric|min:0',
-            'image'        => 'nullable|string',
+            'category_id' => 'sometimes|required|exists:categories,id',
+            'name' => 'sometimes|required|string|max:255',
+            'description' => 'nullable|string',
+            'price' => 'sometimes|required|numeric|min:0',
+            'image' => 'nullable|string',
             'is_available' => 'boolean',
         ]);
 
@@ -70,7 +77,7 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         $restaurant = $product->restaurant;
-        if (request()->user()->id !== $restaurant->user_id && ! request()->user()->isAdmin()) {
+        if (request()->user()->id !== $restaurant->user_id && !request()->user()->isAdmin()) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
 
