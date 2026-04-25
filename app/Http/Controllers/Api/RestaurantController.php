@@ -25,6 +25,13 @@ class RestaurantController extends Controller
                 $query->where('is_available', true)->take(5);
             }])
             ->get();
+
+        $restaurants->transform(function ($restaurant) {
+            if ($restaurant->cover_image) {
+                $restaurant->cover_image = config('app.url') . $restaurant->cover_image;
+            }
+            return $restaurant;
+        });
             
         return response()->json($restaurants);
     }
@@ -58,6 +65,17 @@ class RestaurantController extends Controller
     {
         $restaurant = Restaurant::with(['products.category'])->findOrFail($id);
         
+        if ($restaurant->cover_image) {
+            $restaurant->cover_image = config('app.url') . $restaurant->cover_image;
+        }
+
+        $restaurant->products->transform(function ($product) {
+            if ($product->image) {
+                $product->image = config('app.url') . $product->image;
+            }
+            return $product;
+        });
+
         return response()->json($restaurant);
     }
 
