@@ -1,132 +1,1592 @@
+@php
+    $currentPage = $page ?? 'home';
+
+    $pages = [
+        'home' => [
+            'route' => url('/'),
+            'title' => 'KinaJ&aacute; - Delivery moderno em Angola',
+            'bodyClass' => 'page-home',
+            'heroImage' => 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=1100&q=85',
+            'heroAlt' => 'Hamburger artesanal com batatas fritas',
+            'badgeKey' => 'home.badge',
+            'titleKey' => 'home.title',
+            'leadKey' => 'home.lead',
+            'primaryKey' => 'home.primary',
+            'secondaryKey' => 'home.secondary',
+        ],
+        'partner' => [
+            'route' => url('/seja-parceiro'),
+            'title' => 'KinaJ&aacute; - Seja parceiro',
+            'bodyClass' => 'page-partner',
+            'heroImage' => 'https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?auto=format&fit=crop&w=1100&q=85',
+            'heroAlt' => 'Pizza quente preparada para entrega',
+            'badgeKey' => 'partner.badge',
+            'titleKey' => 'partner.title',
+            'leadKey' => 'partner.lead',
+            'primaryKey' => 'partner.primary',
+            'secondaryKey' => 'partner.secondary',
+        ],
+        'careers' => [
+            'route' => url('/carreiras'),
+            'title' => 'KinaJ&aacute; - Carreiras',
+            'bodyClass' => 'page-careers',
+            'heroImage' => 'https://images.unsplash.com/photo-1526367790999-0150786686a2?auto=format&fit=crop&w=1100&q=85',
+            'heroAlt' => 'Entrega urbana de comida',
+            'badgeKey' => 'careers.badge',
+            'titleKey' => 'careers.title',
+            'leadKey' => 'careers.lead',
+            'primaryKey' => 'careers.primary',
+            'secondaryKey' => 'careers.secondary',
+        ],
+    ];
+
+    $content = $pages[$currentPage] ?? $pages['home'];
+@endphp
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+<html lang="pt" data-language="pt">
 
-        <title>Laravel</title>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description"
+        content="KinaJ&aacute; entrega comida, mercado e essenciais em Luanda com rapidez, cuidado e tecnologia.">
+    <title>{!! $content['title'] !!}</title>
+    <link rel="preconnect" href="https://images.unsplash.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --primary: #EB2835;
+            --primary-dark: #D11D29;
+            --accent: #FBEFB8;
+            --background: #FAFAFA;
+            --background-gray: #F3F4F6;
+            --surface: #FFFFFF;
+            --text-primary: #1F2937;
+            --text-secondary: #6B7280;
+            --text-muted: #9CA3AF;
+            --border: #F3F4F6;
+            --border-medium: #E5E7EB;
+            --dark: #111827;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --info: #3B82F6;
+            --shadow-light: rgba(149, 157, 165, 0.08);
+            --shadow-red: rgba(235, 40, 53, 0.3);
+        }
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+        * {
+            box-sizing: border-box;
+        }
 
-        <!-- Styles -->
-        <style>
-            /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */html{line-height:1.15;-webkit-text-size-adjust:100%}body{margin:0}a{background-color:transparent}[hidden]{display:none}html{font-family:system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;line-height:1.5}*,:after,:before{box-sizing:border-box;border:0 solid #e2e8f0}a{color:inherit;text-decoration:inherit}svg,video{display:block;vertical-align:middle}video{max-width:100%;height:auto}.bg-white{--bg-opacity:1;background-color:#fff;background-color:rgba(255,255,255,var(--bg-opacity))}.bg-gray-100{--bg-opacity:1;background-color:#f7fafc;background-color:rgba(247,250,252,var(--bg-opacity))}.border-gray-200{--border-opacity:1;border-color:#edf2f7;border-color:rgba(237,242,247,var(--border-opacity))}.border-t{border-top-width:1px}.flex{display:flex}.grid{display:grid}.hidden{display:none}.items-center{align-items:center}.justify-center{justify-content:center}.font-semibold{font-weight:600}.h-5{height:1.25rem}.h-8{height:2rem}.h-16{height:4rem}.text-sm{font-size:.875rem}.text-lg{font-size:1.125rem}.leading-7{line-height:1.75rem}.mx-auto{margin-left:auto;margin-right:auto}.ml-1{margin-left:.25rem}.mt-2{margin-top:.5rem}.mr-2{margin-right:.5rem}.ml-2{margin-left:.5rem}.mt-4{margin-top:1rem}.ml-4{margin-left:1rem}.mt-8{margin-top:2rem}.ml-12{margin-left:3rem}.-mt-px{margin-top:-1px}.max-w-6xl{max-width:72rem}.min-h-screen{min-height:100vh}.overflow-hidden{overflow:hidden}.p-6{padding:1.5rem}.py-4{padding-top:1rem;padding-bottom:1rem}.px-6{padding-left:1.5rem;padding-right:1.5rem}.pt-8{padding-top:2rem}.fixed{position:fixed}.relative{position:relative}.top-0{top:0}.right-0{right:0}.shadow{box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px 0 rgba(0,0,0,.06)}.text-center{text-align:center}.text-gray-200{--text-opacity:1;color:#edf2f7;color:rgba(237,242,247,var(--text-opacity))}.text-gray-300{--text-opacity:1;color:#e2e8f0;color:rgba(226,232,240,var(--text-opacity))}.text-gray-400{--text-opacity:1;color:#cbd5e0;color:rgba(203,213,224,var(--text-opacity))}.text-gray-500{--text-opacity:1;color:#a0aec0;color:rgba(160,174,192,var(--text-opacity))}.text-gray-600{--text-opacity:1;color:#718096;color:rgba(113,128,150,var(--text-opacity))}.text-gray-700{--text-opacity:1;color:#4a5568;color:rgba(74,85,104,var(--text-opacity))}.text-gray-900{--text-opacity:1;color:#1a202c;color:rgba(26,32,44,var(--text-opacity))}.underline{text-decoration:underline}.antialiased{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.w-5{width:1.25rem}.w-8{width:2rem}.w-auto{width:auto}.grid-cols-1{grid-template-columns:repeat(1,minmax(0,1fr))}@media (min-width:640px){.sm\:rounded-lg{border-radius:.5rem}.sm\:block{display:block}.sm\:items-center{align-items:center}.sm\:justify-start{justify-content:flex-start}.sm\:justify-between{justify-content:space-between}.sm\:h-20{height:5rem}.sm\:ml-0{margin-left:0}.sm\:px-6{padding-left:1.5rem;padding-right:1.5rem}.sm\:pt-0{padding-top:0}.sm\:text-left{text-align:left}.sm\:text-right{text-align:right}}@media (min-width:768px){.md\:border-t-0{border-top-width:0}.md\:border-l{border-left-width:1px}.md\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}}@media (min-width:1024px){.lg\:px-8{padding-left:2rem;padding-right:2rem}}@media (prefers-color-scheme:dark){.dark\:bg-gray-800{--bg-opacity:1;background-color:#2d3748;background-color:rgba(45,55,72,var(--bg-opacity))}.dark\:bg-gray-900{--bg-opacity:1;background-color:#1a202c;background-color:rgba(26,32,44,var(--bg-opacity))}.dark\:border-gray-700{--border-opacity:1;border-color:#4a5568;border-color:rgba(74,85,104,var(--border-opacity))}.dark\:text-white{--text-opacity:1;color:#fff;color:rgba(255,255,255,var(--text-opacity))}.dark\:text-gray-400{--text-opacity:1;color:#cbd5e0;color:rgba(203,213,224,var(--text-opacity))}.dark\:text-gray-500{--tw-text-opacity:1;color:#6b7280;color:rgba(107,114,128,var(--tw-text-opacity))}}
-        </style>
+        html {
+            scroll-behavior: smooth;
+        }
 
-        <style>
-            body {
-                font-family: 'Nunito', sans-serif;
+        body {
+            min-width: 320px;
+            margin: 0;
+            background: var(--background);
+            color: var(--text-primary);
+            font-family: "Instrument Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            letter-spacing: 0;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        img {
+            display: block;
+            max-width: 100%;
+        }
+
+        .announce {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            min-height: 44px;
+            padding: 8px 20px;
+            background: #fff3f4;
+            color: var(--primary);
+            border-bottom: 1px solid #ffd7db;
+            font-size: 0.92rem;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .announce a {
+            min-height: 28px;
+            display: inline-flex;
+            align-items: center;
+            border: 1px solid rgba(235, 40, 53, 0.18);
+            border-radius: 6px;
+            padding: 0 12px;
+            background: var(--surface);
+            color: var(--dark);
+            font-size: 0.82rem;
+        }
+
+        .site-header {
+            border-bottom: 1px solid var(--border-medium);
+            background: var(--surface);
+        }
+
+        .nav {
+            width: min(1180px, calc(100% - 40px));
+            min-height: 76px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 28px;
+        }
+
+        .brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--primary);
+            font-size: 1.42rem;
+            font-weight: 900;
+        }
+
+        .brand-mark {
+            width: 38px;
+            height: 38px;
+            display: grid;
+            place-items: center;
+            border-radius: 10px;
+            background: var(--primary);
+            color: var(--surface);
+            box-shadow: 0 14px 34px var(--shadow-red);
+            font-size: 1.05rem;
+            font-weight: 900;
+        }
+
+        .nav-links,
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .nav-links a {
+            color: var(--dark);
+            font-size: 0.96rem;
+            font-weight: 700;
+        }
+
+        .nav-links a[aria-current="page"] {
+            color: var(--primary);
+        }
+
+        .lang-toggle {
+            display: inline-grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3px;
+            padding: 3px;
+            border: 1px solid var(--border-medium);
+            border-radius: 999px;
+            background: var(--background-gray);
+        }
+
+        .lang-toggle button {
+            min-width: 42px;
+            min-height: 32px;
+            border: 0;
+            border-radius: 999px;
+            background: transparent;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font: inherit;
+            font-size: 0.82rem;
+            font-weight: 800;
+        }
+
+        .lang-toggle button.is-active {
+            background: var(--primary);
+            color: var(--surface);
+            box-shadow: 0 8px 22px rgba(235, 40, 53, 0.22);
+        }
+
+        .btn {
+            min-height: 48px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+            border: 1px solid var(--border-medium);
+            border-radius: 8px;
+            padding: 0 22px;
+            background: var(--surface);
+            color: var(--text-primary);
+            font-weight: 800;
+            transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 18px 36px var(--shadow-light);
+        }
+
+        .btn-primary {
+            border-color: var(--primary);
+            background: var(--primary);
+            color: var(--surface);
+            box-shadow: 0 18px 38px var(--shadow-red);
+        }
+
+        .hero-shell {
+            position: relative;
+            overflow: hidden;
+            border-bottom: 1px solid var(--border-medium);
+            background:
+                radial-gradient(circle at 80% 18%, rgba(235, 40, 53, 0.12), transparent 26%),
+                linear-gradient(30deg, rgba(229, 231, 235, 0.5) 1px, transparent 1px),
+                linear-gradient(150deg, rgba(229, 231, 235, 0.42) 1px, transparent 1px),
+                var(--background);
+            background-size: auto, 44px 44px, 44px 44px, auto;
+        }
+
+        .hero {
+            width: min(1180px, calc(100% - 40px));
+            min-height: 680px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: minmax(0, 0.9fr) minmax(420px, 1fr);
+            align-items: center;
+            gap: 58px;
+            padding: 66px 0 72px;
+        }
+
+        .hero-copy {
+            animation: fade-up 700ms ease both;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--primary);
+            font-size: 0.9rem;
+            font-weight: 900;
+        }
+
+        .eyebrow::before {
+            content: "";
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: var(--primary);
+            box-shadow: 0 0 0 8px rgba(235, 40, 53, 0.12);
+            animation: pulse-dot 1500ms ease-in-out infinite;
+        }
+
+        .hero h1 {
+            max-width: 680px;
+            margin: 24px 0 22px;
+            color: #151515;
+            font-size: clamp(3.6rem, 6vw, 6.25rem);
+            font-weight: 600;
+            line-height: 0.95;
+        }
+
+        .hero h1 span {
+            color: var(--primary);
+        }
+
+        .lead {
+            max-width: 600px;
+            margin: 0;
+            color: var(--text-secondary);
+            font-size: clamp(1.1rem, 1.8vw, 1.36rem);
+            font-weight: 600;
+            line-height: 1.5;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 12px;
+            margin-top: 34px;
+        }
+
+        .hero-points {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            max-width: 610px;
+            margin-top: 40px;
+            border: 1px solid var(--border-medium);
+            background: rgba(255, 255, 255, 0.78);
+            backdrop-filter: blur(14px);
+        }
+
+        .hero-point {
+            min-height: 104px;
+            padding: 20px;
+            border-right: 1px solid var(--border-medium);
+        }
+
+        .hero-point:last-child {
+            border-right: 0;
+        }
+
+        .hero-point strong {
+            display: block;
+            color: var(--dark);
+            font-size: 1.5rem;
+            font-weight: 900;
+            line-height: 1;
+        }
+
+        .hero-point span {
+            display: block;
+            margin-top: 10px;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-weight: 700;
+            line-height: 1.35;
+        }
+
+        .hero-media {
+            position: relative;
+            min-height: 560px;
+            animation: float-in 900ms ease both 120ms;
+        }
+
+        .food-card {
+            position: absolute;
+            inset: 20px 0 auto auto;
+            width: min(520px, 100%);
+            overflow: hidden;
+            border: 10px solid var(--surface);
+            border-radius: 36px;
+            background: var(--surface);
+            box-shadow: 0 32px 80px rgba(17, 24, 39, 0.18);
+            transform: rotate(2deg);
+            animation: float-card 4200ms ease-in-out infinite;
+        }
+
+        .food-card img {
+            width: 100%;
+            height: 570px;
+            object-fit: cover;
+        }
+
+        .food-card::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, transparent 42%, rgba(17, 24, 39, 0.46));
+        }
+
+        .order-badge {
+            position: absolute;
+            left: 8px;
+            bottom: 58px;
+            z-index: 2;
+            width: min(280px, 62%);
+            padding: 18px;
+            border: 1px solid rgba(255, 255, 255, 0.55);
+            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.92);
+            box-shadow: 0 24px 60px rgba(17, 24, 39, 0.16);
+            animation: badge-pop 2800ms ease-in-out infinite;
+        }
+
+        .order-badge strong {
+            display: block;
+            margin-bottom: 6px;
+            color: var(--primary);
+            font-size: 1rem;
+            font-weight: 900;
+        }
+
+        .order-badge span {
+            display: block;
+            color: var(--text-secondary);
+            font-weight: 700;
+            line-height: 1.35;
+        }
+
+        .spice-orbit {
+            position: absolute;
+            right: 8px;
+            top: 36px;
+            z-index: 3;
+            display: grid;
+            place-items: center;
+            width: 116px;
+            height: 116px;
+            border-radius: 50%;
+            background: var(--accent);
+            color: var(--primary-dark);
+            box-shadow: 0 20px 52px rgba(235, 40, 53, 0.16);
+            font-size: 0.82rem;
+            font-weight: 900;
+            text-align: center;
+            animation: spin-soft 11500ms linear infinite;
+        }
+
+        .section {
+            padding: 86px 0;
+        }
+
+        .section.white {
+            background: var(--surface);
+        }
+
+        .section-inner {
+            width: min(1180px, calc(100% - 40px));
+            margin: 0 auto;
+        }
+
+        .section-heading {
+            display: grid;
+            grid-template-columns: minmax(0, 0.92fr) minmax(280px, 0.58fr);
+            gap: 48px;
+            align-items: end;
+            margin-bottom: 36px;
+        }
+
+        .section-heading h2 {
+            margin: 0;
+            color: #151515;
+            font-size: clamp(2.3rem, 4vw, 4.45rem);
+            font-weight: 600;
+            line-height: 1;
+        }
+
+        .section-heading p {
+            margin: 0;
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+            font-weight: 600;
+            line-height: 1.58;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            border-top: 1px solid var(--border-medium);
+            border-left: 1px solid var(--border-medium);
+        }
+
+        .feature-card {
+            min-height: 264px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 24px;
+            padding: 28px;
+            border-right: 1px solid var(--border-medium);
+            border-bottom: 1px solid var(--border-medium);
+            background: var(--surface);
+            transition: transform 180ms ease, background 180ms ease, box-shadow 180ms ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-6px);
+            background: #fff7f8;
+            box-shadow: 0 22px 60px var(--shadow-light);
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            display: grid;
+            place-items: center;
+            border-radius: 10px;
+            background: #fff0f1;
+            color: var(--primary);
+            font-weight: 900;
+        }
+
+        .feature-card h3 {
+            margin: 0 0 10px;
+            color: var(--dark);
+            font-size: 1.28rem;
+            font-weight: 900;
+        }
+
+        .feature-card p {
+            margin: 0;
+            color: var(--text-secondary);
+            font-weight: 600;
+            line-height: 1.55;
+        }
+
+        .feature-card a {
+            color: var(--primary);
+            font-weight: 900;
+        }
+
+        .page-panel {
+            display: grid;
+            grid-template-columns: minmax(0, 0.7fr) minmax(320px, 0.55fr);
+            gap: 28px;
+            align-items: stretch;
+        }
+
+        .impact-panel,
+        .signup-panel {
+            border: 1px solid var(--border-medium);
+            background: var(--surface);
+            padding: 34px;
+        }
+
+        .impact-panel {
+            min-height: 430px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            color: var(--surface);
+            background:
+                linear-gradient(135deg, rgba(235, 40, 53, 0.92), rgba(209, 29, 41, 0.88)),
+                url("https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1100&q=82");
+            background-size: cover;
+            background-position: center;
+        }
+
+        .impact-panel h2 {
+            max-width: 640px;
+            margin: 0;
+            font-size: clamp(2.6rem, 5vw, 5.2rem);
+            font-weight: 900;
+            line-height: 0.95;
+        }
+
+        .impact-panel p {
+            max-width: 560px;
+            margin: 18px 0 0;
+            color: rgba(255, 255, 255, 0.84);
+            font-size: 1.08rem;
+            font-weight: 700;
+            line-height: 1.55;
+        }
+
+        .signup-panel {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 28px;
+        }
+
+        .signup-list {
+            display: grid;
+            gap: 16px;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .signup-list li {
+            display: flex;
+            gap: 12px;
+            color: var(--text-secondary);
+            font-weight: 700;
+            line-height: 1.5;
+        }
+
+        .signup-list li::before {
+            content: "";
+            flex: 0 0 auto;
+            width: 10px;
+            height: 10px;
+            margin-top: 7px;
+            border-radius: 50%;
+            background: var(--primary);
+        }
+
+        .app-download {
+            position: relative;
+            overflow: hidden;
+            background:
+                radial-gradient(circle at 18% 20%, rgba(235, 40, 53, 0.12), transparent 28%),
+                radial-gradient(circle at 82% 72%, rgba(251, 239, 184, 0.76), transparent 24%),
+                var(--background);
+        }
+
+        .app-download-card {
+            display: grid;
+            grid-template-columns: minmax(0, 0.92fr) minmax(300px, 0.58fr);
+            gap: 42px;
+            align-items: center;
+            border: 1px solid var(--border-medium);
+            background: rgba(255, 255, 255, 0.84);
+            box-shadow: 0 30px 80px var(--shadow-light);
+            padding: clamp(28px, 5vw, 54px);
+        }
+
+        .app-download-copy {
+            animation: fade-up 700ms ease both;
+        }
+
+        .app-kicker {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--primary);
+            font-size: 0.86rem;
+            font-weight: 900;
+            text-transform: uppercase;
+        }
+
+        .app-kicker::before {
+            content: "";
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--primary);
+        }
+
+        .app-download h2 {
+            max-width: 680px;
+            margin: 18px 0 16px;
+            color: #151515;
+            font-size: clamp(2.35rem, 4.5vw, 5rem);
+            font-weight: 900;
+            line-height: 0.96;
+        }
+
+        .app-download p {
+            max-width: 620px;
+            margin: 0;
+            color: var(--text-secondary);
+            font-size: 1.08rem;
+            font-weight: 700;
+            line-height: 1.58;
+        }
+
+        .store-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 30px;
+        }
+
+        .store-button {
+            min-width: 188px;
+            min-height: 64px;
+            display: inline-flex;
+            align-items: center;
+            gap: 13px;
+            border: 1px solid rgba(17, 24, 39, 0.14);
+            border-radius: 12px;
+            padding: 10px 16px;
+            background: var(--dark);
+            color: var(--surface);
+            box-shadow: 0 18px 40px rgba(17, 24, 39, 0.16);
+            transition: transform 180ms ease, box-shadow 180ms ease;
+        }
+
+        .store-button:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 24px 54px rgba(17, 24, 39, 0.22);
+        }
+
+        .store-icon {
+            width: 38px;
+            height: 38px;
+            display: grid;
+            place-items: center;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.12);
+            font-size: 1.15rem;
+            font-weight: 900;
+        }
+
+        .store-button small,
+        .store-button strong {
+            display: block;
+            line-height: 1.05;
+        }
+
+        .store-button small {
+            color: rgba(255, 255, 255, 0.74);
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .store-button strong {
+            margin-top: 4px;
+            color: var(--surface);
+            font-size: 1.2rem;
+            font-weight: 900;
+        }
+
+        .phone-preview {
+            position: relative;
+            width: min(280px, 100%);
+            min-height: 520px;
+            margin: 0 auto;
+            border: 10px solid var(--dark);
+            border-radius: 38px;
+            background: var(--surface);
+            box-shadow: 0 28px 70px rgba(17, 24, 39, 0.2);
+            overflow: hidden;
+            animation: float-card 4600ms ease-in-out infinite;
+        }
+
+        .phone-notch {
+            width: 104px;
+            height: 24px;
+            margin: 10px auto 0;
+            border-radius: 999px;
+            background: var(--dark);
+        }
+
+        .phone-screen {
+            padding: 18px;
+        }
+
+        .phone-screen h3 {
+            margin: 16px 0 12px;
+            color: var(--dark);
+            font-size: 1.6rem;
+            line-height: 1;
+        }
+
+        .phone-food {
+            height: 190px;
+            overflow: hidden;
+            border-radius: 24px;
+            background: var(--primary);
+        }
+
+        .phone-food img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .phone-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-top: 12px;
+            padding: 12px;
+            border-radius: 16px;
+            background: var(--background-gray);
+            color: var(--text-secondary);
+            font-size: 0.86rem;
+            font-weight: 800;
+        }
+
+        .phone-row strong {
+            color: var(--primary);
+        }
+
+        .site-footer {
+            background: var(--primary);
+            color: var(--surface);
+        }
+
+        .footer-promo {
+            display: grid;
+            grid-template-columns: minmax(0, 0.42fr) minmax(320px, 1fr);
+            min-height: 210px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+            background: var(--primary);
+        }
+
+        .footer-promo-image {
+            min-height: 210px;
+            background:
+                radial-gradient(circle at 28% 34%, rgba(251, 239, 184, 0.95) 0 18px, transparent 19px),
+                radial-gradient(circle at 68% 55%, rgba(255, 255, 255, 0.9) 0 13px, transparent 14px),
+                repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.14) 0 2px, transparent 2px 18px),
+                var(--primary);
+            background-size: auto;
+            background-position: center;
+        }
+
+        .footer-promo-copy {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 28px;
+            padding: 34px min(6vw, 72px);
+            background: var(--primary);
+        }
+
+        .footer-promo-copy h2 {
+            max-width: 620px;
+            margin: 0;
+            font-size: clamp(2rem, 4vw, 4rem);
+            font-weight: 900;
+            line-height: 0.95;
+            text-transform: uppercase;
+        }
+
+        .footer-promo-copy span {
+            display: inline-flex;
+            min-width: 142px;
+            min-height: 142px;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid rgba(255, 255, 255, 0.62);
+            border-radius: 50%;
+            color: var(--accent);
+            text-align: center;
+            font-size: 0.88rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            animation: spin-soft 14000ms linear infinite;
+        }
+
+        .footer-main {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(240px, 0.65fr);
+            min-height: 300px;
+        }
+
+        .footer-links {
+            width: min(100%, 980px);
+            display: grid;
+            grid-template-columns: repeat(3, minmax(150px, 1fr));
+            gap: 40px;
+            padding: 60px min(6vw, 96px);
+        }
+
+        .footer-col strong {
+            display: block;
+            margin-bottom: 14px;
+            color: var(--surface);
+            font-size: 1.1rem;
+            font-weight: 900;
+        }
+
+        .footer-col a,
+        .footer-col span {
+            display: block;
+            margin-bottom: 10px;
+            color: rgba(255, 255, 255, 0.84);
+            font-weight: 600;
+        }
+
+        .footer-brand-panel {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 24px;
+            padding: 54px min(6vw, 72px);
+            background: var(--primary-dark);
+        }
+
+        .footer-logo {
+            font-size: clamp(2.5rem, 5vw, 4.8rem);
+            font-weight: 900;
+            line-height: 0.92;
+        }
+
+        .footer-tagline {
+            max-width: 260px;
+            color: var(--accent);
+            font-size: 2rem;
+            font-weight: 900;
+            line-height: 0.9;
+            text-transform: uppercase;
+        }
+
+        .footer-bottom {
+            padding: 0 min(6vw, 96px) 38px;
+            color: rgba(255, 255, 255, 0.78);
+            font-size: 0.86rem;
+            font-weight: 600;
+        }
+
+        @keyframes fade-up {
+            from {
+                opacity: 0;
+                transform: translateY(22px);
             }
-        </style>
-    </head>
-    <body class="antialiased">
-        <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-4 sm:pt-0">
-            @if (Route::has('login'))
-                <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
-                    @auth
-                        <a href="{{ url('/home') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Home</a>
-                    @else
-                        <a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Log in</a>
 
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">Register</a>
-                        @endif
-                    @endauth
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float-in {
+            from {
+                opacity: 0;
+                transform: translateY(34px) scale(0.98);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes float-card {
+
+            0%,
+            100% {
+                transform: rotate(2deg) translateY(0);
+            }
+
+            50% {
+                transform: rotate(-1deg) translateY(-14px);
+            }
+        }
+
+        @keyframes badge-pop {
+
+            0%,
+            100% {
+                transform: translateY(0) scale(1);
+            }
+
+            50% {
+                transform: translateY(-8px) scale(1.03);
+            }
+        }
+
+        @keyframes pulse-dot {
+
+            0%,
+            100% {
+                box-shadow: 0 0 0 8px rgba(235, 40, 53, 0.12);
+            }
+
+            50% {
+                box-shadow: 0 0 0 14px rgba(235, 40, 53, 0.04);
+            }
+        }
+
+        @keyframes spin-soft {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+                animation-duration: 1ms !important;
+                animation-iteration-count: 1 !important;
+                scroll-behavior: auto !important;
+                transition-duration: 1ms !important;
+            }
+        }
+
+        @media (max-width: 980px) {
+            .nav {
+                align-items: flex-start;
+                flex-direction: column;
+                padding: 18px 0;
+            }
+
+            .nav-links,
+            .nav-actions {
+                width: 100%;
+                justify-content: space-between;
+                flex-wrap: wrap;
+            }
+
+            .hero,
+            .section-heading,
+            .page-panel,
+            .app-download-card,
+            .footer-promo,
+            .footer-main {
+                grid-template-columns: 1fr;
+            }
+
+            .hero {
+                min-height: auto;
+                padding-top: 52px;
+            }
+
+            .hero-media {
+                min-height: 500px;
+            }
+
+            .food-card {
+                left: 0;
+                right: auto;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-links {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 660px) {
+            .announce {
+                align-items: flex-start;
+                flex-direction: column;
+                text-align: left;
+            }
+
+            .nav,
+            .hero,
+            .section-inner {
+                width: min(100% - 28px, 1180px);
+            }
+
+            .nav-links {
+                gap: 12px;
+            }
+
+            .nav-links a {
+                font-size: 0.9rem;
+            }
+
+            .nav-actions .btn {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: clamp(2.9rem, 13vw, 4rem);
+            }
+
+            .hero-points {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-point {
+                border-right: 0;
+                border-bottom: 1px solid var(--border-medium);
+            }
+
+            .hero-point:last-child {
+                border-bottom: 0;
+            }
+
+            .hero-media {
+                min-height: 420px;
+            }
+
+            .food-card img {
+                height: 420px;
+            }
+
+            .spice-orbit {
+                width: 96px;
+                height: 96px;
+            }
+
+            .section {
+                padding: 62px 0;
+            }
+
+            .page-panel {
+                gap: 16px;
+            }
+
+            .app-download-card {
+                padding: 24px;
+            }
+
+            .store-button {
+                width: 100%;
+            }
+
+            .phone-preview {
+                min-height: 470px;
+            }
+
+            .impact-panel,
+            .signup-panel {
+                padding: 24px;
+            }
+
+            .footer-promo-copy {
+                align-items: flex-start;
+                flex-direction: column;
+                padding: 30px 24px;
+            }
+
+            .footer-links {
+                grid-template-columns: 1fr;
+                padding: 40px 24px;
+            }
+
+            .footer-brand-panel {
+                padding: 40px 24px;
+            }
+
+            .footer-bottom {
+                padding: 0 24px 34px;
+            }
+        }
+    </style>
+</head>
+
+<body class="{{ $content['bodyClass'] }}">
+
+
+    <header class="site-header">
+        <nav class="nav" aria-label="Navega&ccedil;&atilde;o principal">
+            <a href="{{ url('/') }}" class="brand" aria-label="KinaJ&aacute;">
+                <span class="brand-mark">K</span>
+                <span>KinaJ&aacute;</span>
+            </a>
+
+            <div class="nav-links">
+                <a href="{{ url('/') }}" data-i18n="nav.home" @if($currentPage === 'home') aria-current="page"
+                @endif>HOME</a>
+                <a href="{{ url('/seja-parceiro') }}" data-i18n="nav.partner" @if($currentPage === 'partner')
+                aria-current="page" @endif>SEJA PARCEIRO</a>
+                <a href="{{ url('/carreiras') }}" data-i18n="nav.careers" @if($currentPage === 'careers')
+                aria-current="page" @endif>CARREIRAS</a>
+            </div>
+
+            <div class="nav-actions">
+                <div class="lang-toggle" aria-label="Selecionar idioma">
+                    <button type="button" class="is-active" data-lang="pt">PT</button>
+                    <button type="button" data-lang="en">EN</button>
                 </div>
-            @endif
+            </div>
+        </nav>
+    </header>
 
-            <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
-                <div class="flex justify-center pt-8 sm:justify-start sm:pt-0">
-                    <svg viewBox="0 0 651 192" fill="none" xmlns="http://www.w3.org/2000/svg" class="h-16 w-auto text-gray-700 sm:h-20">
-                        <g clip-path="url(#clip0)" fill="#EF3B2D">
-                            <path d="M248.032 44.676h-16.466v100.23h47.394v-14.748h-30.928V44.676zM337.091 87.202c-2.101-3.341-5.083-5.965-8.949-7.875-3.865-1.909-7.756-2.864-11.669-2.864-5.062 0-9.69.931-13.89 2.792-4.201 1.861-7.804 4.417-10.811 7.661-3.007 3.246-5.347 6.993-7.016 11.239-1.672 4.249-2.506 8.713-2.506 13.389 0 4.774.834 9.26 2.506 13.459 1.669 4.202 4.009 7.925 7.016 11.169 3.007 3.246 6.609 5.799 10.811 7.66 4.199 1.861 8.828 2.792 13.89 2.792 3.913 0 7.804-.955 11.669-2.863 3.866-1.908 6.849-4.533 8.949-7.875v9.021h15.607V78.182h-15.607v9.02zm-1.431 32.503c-.955 2.578-2.291 4.821-4.009 6.73-1.719 1.91-3.795 3.437-6.229 4.582-2.435 1.146-5.133 1.718-8.091 1.718-2.96 0-5.633-.572-8.019-1.718-2.387-1.146-4.438-2.672-6.156-4.582-1.719-1.909-3.032-4.152-3.938-6.73-.909-2.577-1.36-5.298-1.36-8.161 0-2.864.451-5.585 1.36-8.162.905-2.577 2.219-4.819 3.938-6.729 1.718-1.908 3.77-3.437 6.156-4.582 2.386-1.146 5.059-1.718 8.019-1.718 2.958 0 5.656.572 8.091 1.718 2.434 1.146 4.51 2.674 6.229 4.582 1.718 1.91 3.054 4.152 4.009 6.729.953 2.577 1.432 5.298 1.432 8.162-.001 2.863-.479 5.584-1.432 8.161zM463.954 87.202c-2.101-3.341-5.083-5.965-8.949-7.875-3.865-1.909-7.756-2.864-11.669-2.864-5.062 0-9.69.931-13.89 2.792-4.201 1.861-7.804 4.417-10.811 7.661-3.007 3.246-5.347 6.993-7.016 11.239-1.672 4.249-2.506 8.713-2.506 13.389 0 4.774.834 9.26 2.506 13.459 1.669 4.202 4.009 7.925 7.016 11.169 3.007 3.246 6.609 5.799 10.811 7.66 4.199 1.861 8.828 2.792 13.89 2.792 3.913 0 7.804-.955 11.669-2.863 3.866-1.908 6.849-4.533 8.949-7.875v9.021h15.607V78.182h-15.607v9.02zm-1.432 32.503c-.955 2.578-2.291 4.821-4.009 6.73-1.719 1.91-3.795 3.437-6.229 4.582-2.435 1.146-5.133 1.718-8.091 1.718-2.96 0-5.633-.572-8.019-1.718-2.387-1.146-4.438-2.672-6.156-4.582-1.719-1.909-3.032-4.152-3.938-6.73-.909-2.577-1.36-5.298-1.36-8.161 0-2.864.451-5.585 1.36-8.162.905-2.577 2.219-4.819 3.938-6.729 1.718-1.908 3.77-3.437 6.156-4.582 2.386-1.146 5.059-1.718 8.019-1.718 2.958 0 5.656.572 8.091 1.718 2.434 1.146 4.51 2.674 6.229 4.582 1.718 1.91 3.054 4.152 4.009 6.729.953 2.577 1.432 5.298 1.432 8.162 0 2.863-.479 5.584-1.432 8.161zM650.772 44.676h-15.606v100.23h15.606V44.676zM365.013 144.906h15.607V93.538h26.776V78.182h-42.383v66.724zM542.133 78.182l-19.616 51.096-19.616-51.096h-15.808l25.617 66.724h19.614l25.617-66.724h-15.808zM591.98 76.466c-19.112 0-34.239 15.706-34.239 35.079 0 21.416 14.641 35.079 36.239 35.079 12.088 0 19.806-4.622 29.234-14.688l-10.544-8.158c-.006.008-7.958 10.449-19.832 10.449-13.802 0-19.612-11.127-19.612-16.884h51.777c2.72-22.043-11.772-40.877-33.023-40.877zm-18.713 29.28c.12-1.284 1.917-16.884 18.589-16.884 16.671 0 18.697 15.598 18.813 16.884h-37.402zM184.068 43.892c-.024-.088-.073-.165-.104-.25-.058-.157-.108-.316-.191-.46-.056-.097-.137-.176-.203-.265-.087-.117-.161-.242-.265-.345-.085-.086-.194-.148-.29-.223-.109-.085-.206-.182-.327-.252l-.002-.001-.002-.002-35.648-20.524a2.971 2.971 0 00-2.964 0l-35.647 20.522-.002.002-.002.001c-.121.07-.219.167-.327.252-.096.075-.205.138-.29.223-.103.103-.178.228-.265.345-.066.089-.147.169-.203.265-.083.144-.133.304-.191.46-.031.085-.08.162-.104.25-.067.249-.103.51-.103.776v38.979l-29.706 17.103V24.493a3 3 0 00-.103-.776c-.024-.088-.073-.165-.104-.25-.058-.157-.108-.316-.191-.46-.056-.097-.137-.176-.203-.265-.087-.117-.161-.242-.265-.345-.085-.086-.194-.148-.29-.223-.109-.085-.206-.182-.327-.252l-.002-.001-.002-.002L40.098 1.396a2.971 2.971 0 00-2.964 0L1.487 21.919l-.002.002-.002.001c-.121.07-.219.167-.327.252-.096.075-.205.138-.29.223-.103.103-.178.228-.265.345-.066.089-.147.169-.203.265-.083.144-.133.304-.191.46-.031.085-.08.162-.104.25-.067.249-.103.51-.103.776v122.09c0 1.063.568 2.044 1.489 2.575l71.293 41.045c.156.089.324.143.49.202.078.028.15.074.23.095a2.98 2.98 0 001.524 0c.069-.018.132-.059.2-.083.176-.061.354-.119.519-.214l71.293-41.045a2.971 2.971 0 001.489-2.575v-38.979l34.158-19.666a2.971 2.971 0 001.489-2.575V44.666a3.075 3.075 0 00-.106-.774zM74.255 143.167l-29.648-16.779 31.136-17.926.001-.001 34.164-19.669 29.674 17.084-21.772 12.428-43.555 24.863zm68.329-76.259v33.841l-12.475-7.182-17.231-9.92V49.806l12.475 7.182 17.231 9.92zm2.97-39.335l29.693 17.095-29.693 17.095-29.693-17.095 29.693-17.095zM54.06 114.089l-12.475 7.182V46.733l17.231-9.92 12.475-7.182v74.537l-17.231 9.921zM38.614 7.398l29.693 17.095-29.693 17.095L8.921 24.493 38.614 7.398zM5.938 29.632l12.475 7.182 17.231 9.92v79.676l.001.005-.001.006c0 .114.032.221.045.333.017.146.021.294.059.434l.002.007c.032.117.094.222.14.334.051.124.088.255.156.371a.036.036 0 00.004.009c.061.105.149.191.222.288.081.105.149.22.244.314l.008.01c.084.083.19.142.284.215.106.083.202.178.32.247l.013.005.011.008 34.139 19.321v34.175L5.939 144.867V29.632h-.001zm136.646 115.235l-65.352 37.625V148.31l48.399-27.628 16.953-9.677v33.862zm35.646-61.22l-29.706 17.102V66.908l17.231-9.92 12.475-7.182v33.841z"/>
-                        </g>
-                    </svg>
-                </div>
+    <main>
+        <section class="hero-shell">
+            <div class="hero">
+                <div class="hero-copy">
+                    <span class="eyebrow" data-i18n="{{ $content['badgeKey'] }}">Delivery em Angola</span>
+                    <h1 data-i18n-html="{{ $content['titleKey'] }}">Se est&aacute;s com fome pe&ccedil;a um <span>Kina
+                            J&aacute;</span></h1>
+                    <p class="lead" data-i18n="{{ $content['leadKey'] }}">
+                        Comida, mercado e essenciais entregues com rapidez, cuidado e acompanhamento simples.
+                    </p>
 
-                <div class="mt-8 bg-white dark:bg-gray-800 overflow-hidden shadow sm:rounded-lg">
-                    <div class="grid grid-cols-1 md:grid-cols-2">
-                        <div class="p-6">
-                            <div class="flex items-center">
-                                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="w-8 h-8 text-gray-500"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
-                                <div class="ml-4 text-lg leading-7 font-semibold"><a href="https://laravel.com/docs" class="underline text-gray-900 dark:text-white">Documentation</a></div>
-                            </div>
+                    <div class="hero-actions">
+                        <a class="btn btn-primary"
+                            href="{{ $currentPage === 'home' ? url('/seja-parceiro') : '#contacto' }}"
+                            data-i18n="{{ $content['primaryKey'] }}">Pedir agora</a>
+                        <a class="btn"
+                            href="{{ $currentPage === 'careers' ? url('/seja-parceiro') : url('/carreiras') }}"
+                            data-i18n="{{ $content['secondaryKey'] }}">Ver carreiras</a>
+                    </div>
 
-                            <div class="ml-12">
-                                <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-                                    Laravel has wonderful, thorough documentation covering every aspect of the framework. Whether you are new to the framework or have previous experience with Laravel, we recommend reading all of the documentation from beginning to end.
-                                </div>
-                            </div>
+                    <div class="hero-points" aria-label="Destaques">
+                        <div class="hero-point">
+                            <strong>25m</strong>
+                            <span data-i18n="stats.delivery">tempo m&eacute;dio de entrega</span>
                         </div>
-
-                        <div class="p-6 border-t border-gray-200 dark:border-gray-700 md:border-t-0 md:border-l">
-                            <div class="flex items-center">
-                                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="w-8 h-8 text-gray-500"><path d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path><path d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                                <div class="ml-4 text-lg leading-7 font-semibold"><a href="https://laracasts.com" class="underline text-gray-900 dark:text-white">Laracasts</a></div>
-                            </div>
-
-                            <div class="ml-12">
-                                <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-                                    Laracasts offers thousands of video tutorials on Laravel, PHP, and JavaScript development. Check them out, see for yourself, and massively level up your development skills in the process.
-                                </div>
-                            </div>
+                        <div class="hero-point">
+                            <strong>80+</strong>
+                            <span data-i18n="stats.partners">parceiros ativos</span>
                         </div>
-
-                        <div class="p-6 border-t border-gray-200 dark:border-gray-700">
-                            <div class="flex items-center">
-                                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="w-8 h-8 text-gray-500"><path d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"></path></svg>
-                                <div class="ml-4 text-lg leading-7 font-semibold"><a href="https://laravel-news.com/" class="underline text-gray-900 dark:text-white">Laravel News</a></div>
-                            </div>
-
-                            <div class="ml-12">
-                                <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-                                    Laravel News is a community driven portal and newsletter aggregating all of the latest and most important news in the Laravel ecosystem, including new package releases and tutorials.
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="p-6 border-t border-gray-200 dark:border-gray-700 md:border-l">
-                            <div class="flex items-center">
-                                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="w-8 h-8 text-gray-500"><path d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                <div class="ml-4 text-lg leading-7 font-semibold text-gray-900 dark:text-white">Vibrant Ecosystem</div>
-                            </div>
-
-                            <div class="ml-12">
-                                <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-                                    Laravel's robust library of first-party tools and libraries, such as <a href="https://forge.laravel.com" class="underline">Forge</a>, <a href="https://vapor.laravel.com" class="underline">Vapor</a>, <a href="https://nova.laravel.com" class="underline">Nova</a>, and <a href="https://envoyer.io" class="underline">Envoyer</a> help you take your projects to the next level. Pair them with powerful open source libraries like <a href="https://laravel.com/docs/billing" class="underline">Cashier</a>, <a href="https://laravel.com/docs/dusk" class="underline">Dusk</a>, <a href="https://laravel.com/docs/broadcasting" class="underline">Echo</a>, <a href="https://laravel.com/docs/horizon" class="underline">Horizon</a>, <a href="https://laravel.com/docs/sanctum" class="underline">Sanctum</a>, <a href="https://laravel.com/docs/telescope" class="underline">Telescope</a>, and more.
-                                </div>
-                            </div>
+                        <div class="hero-point">
+                            <strong>15k</strong>
+                            <span data-i18n="stats.orders">pedidos preparados</span>
                         </div>
                     </div>
                 </div>
 
-                <div class="flex justify-center mt-4 sm:items-center sm:justify-between">
-                    <div class="text-center text-sm text-gray-500 sm:text-left">
-                        <div class="flex items-center">
-                            <svg fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor" class="-mt-px w-5 h-5 text-gray-400">
-                                <path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                            </svg>
-
-                            <a href="https://laravel.bigcartel.com" class="ml-1 underline">
-                                Shop
-                            </a>
-
-                            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="ml-4 -mt-px w-5 h-5 text-gray-400">
-                                <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
-                            </svg>
-
-                            <a href="https://github.com/sponsors/taylorotwell" class="ml-1 underline">
-                                Sponsor
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="ml-4 text-center text-sm text-gray-500 sm:text-right sm:ml-0">
-                        Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})
+                <div class="hero-media" aria-label="Comida KinaJ&aacute;">
+                    <div class="spice-orbit" data-i18n="hero.orbit">fresh<br>fast<br>local</div>
+                    <figure class="food-card">
+                        <img src="{{ $content['heroImage'] }}" alt="{{ $content['heroAlt'] }}">
+                    </figure>
+                    <div class="order-badge">
+                        <strong data-i18n="hero.badgeTitle">Pedido confirmado</strong>
+                        <span data-i18n="hero.badgeText">A sua comida est&aacute; a caminho.</span>
                     </div>
                 </div>
             </div>
+        </section>
+
+        @if ($currentPage === 'home')
+            <section class="section white" id="servicos">
+                <div class="section-inner">
+                    <div class="section-heading">
+                        <h2 data-i18n="home.sectionTitle">Tudo o que precisas numa s&oacute; plataforma.</h2>
+                        <p data-i18n="home.sectionLead">KinaJ&aacute; liga clientes, restaurantes, mercados e estafetas numa
+                            experi&ecirc;ncia simples, moderna e preparada para crescer.</p>
+                    </div>
+
+                    <div class="feature-grid">
+                        <article class="feature-card">
+                            <div>
+                                <div class="feature-icon">01</div>
+                                <h3 data-i18n="home.card1.title">Restaurantes</h3>
+                                <p data-i18n="home.card1.text">Descobre pratos quentes, snacks e menus completos perto de
+                                    ti.</p>
+                            </div>
+                            <a href="{{ url('/seja-parceiro') }}" data-i18n="home.cardLink">Explorar &rarr;</a>
+                        </article>
+
+                        <article class="feature-card">
+                            <div>
+                                <div class="feature-icon">02</div>
+                                <h3 data-i18n="home.card2.title">Mercado e lojas</h3>
+                                <p data-i18n="home.card2.text">Compra essenciais, mercearia e conveni&ecirc;ncia sem perder
+                                    tempo.</p>
+                            </div>
+                            <a href="{{ url('/seja-parceiro') }}" data-i18n="home.cardLink">Explorar &rarr;</a>
+                        </article>
+
+                        <article class="feature-card">
+                            <div>
+                                <div class="feature-icon">03</div>
+                                <h3 data-i18n="home.card3.title">Entrega expressa</h3>
+                                <p data-i18n="home.card3.text">Acompanha cada pedido desde a prepara&ccedil;&atilde;o
+                                    at&eacute; &agrave; porta.</p>
+                            </div>
+                            <a href="{{ url('/carreiras') }}" data-i18n="home.card3.link">Juntar &agrave; equipa &rarr;</a>
+                        </article>
+                    </div>
+                </div>
+            </section>
+        @elseif ($currentPage === 'partner')
+            <section class="section white" id="contacto">
+                <div class="section-inner page-panel">
+                    <div class="impact-panel">
+                        <div>
+                            <h2 data-i18n="partner.panelTitle">Venda mais sem complicar a opera&ccedil;&atilde;o.</h2>
+                            <p data-i18n="partner.panelLead">Publique o seu cat&aacute;logo, receba pedidos e alcance
+                                clientes que querem comprar agora.</p>
+                        </div>
+                    </div>
+                    <aside class="signup-panel">
+                        <div>
+                            <h2 data-i18n="partner.sideTitle">Como funciona</h2>
+                            <ul class="signup-list">
+                                <li data-i18n="partner.step1">Registamos o seu restaurante ou loja.</li>
+                                <li data-i18n="partner.step2">Configuramos menu, produtos e zonas de entrega.</li>
+                                <li data-i18n="partner.step3">Come&ccedil;a a receber pedidos com acompanhamento.</li>
+                            </ul>
+                        </div>
+                        <a class="btn btn-primary" href="mailto:parceiros@kinaja.ao" data-i18n="partner.email">Contactar
+                            equipa</a>
+                    </aside>
+                </div>
+            </section>
+        @else
+            <section class="section white" id="contacto">
+                <div class="section-inner page-panel">
+                    <div class="impact-panel">
+                        <div>
+                            <h2 data-i18n="careers.panelTitle">Constr&oacute;i a entrega que move a cidade.</h2>
+                            <p data-i18n="careers.panelLead">Estamos a juntar operadores, suporte, tecnologia e estafetas
+                                para criar uma experi&ecirc;ncia melhor em Angola.</p>
+                        </div>
+                    </div>
+                    <aside class="signup-panel">
+                        <div>
+                            <h2 data-i18n="careers.sideTitle">Vagas abertas</h2>
+                            <ul class="signup-list">
+                                <li data-i18n="careers.role1">Estafetas parceiros</li>
+                                <li data-i18n="careers.role2">Suporte ao cliente</li>
+                                <li data-i18n="careers.role3">Opera&ccedil;&otilde;es e expans&atilde;o</li>
+                            </ul>
+                        </div>
+                        <a class="btn btn-primary" href="mailto:carreiras@kinaja.ao" data-i18n="careers.email">Enviar
+                            candidatura</a>
+                    </aside>
+                </div>
+            </section>
+        @endif
+
+        <section class="section app-download" id="baixar-app">
+            <div class="section-inner">
+                <div class="app-download-card">
+                    <div class="app-download-copy">
+                        <span class="app-kicker" data-i18n="app.badge">Apps KinaJ&aacute;</span>
+                        <h2 data-i18n="app.title">Baixe o app e pe&ccedil;a em segundos.</h2>
+                        <p data-i18n="app.lead">Tenha restaurantes, mercado e entregas expressas no bolso. Dispon&iacute;vel para iPhone e Android.</p>
+
+                        <div class="store-buttons" aria-label="Baixar apps">
+                            <a class="store-button" href="https://apps.apple.com/" target="_blank" rel="noopener" aria-label="Baixar na App Store">
+                                <span class="store-icon">A</span>
+                                <span>
+                                    <small data-i18n="app.appleSmall">Baixar na</small>
+                                    <strong data-i18n="app.apple">App Store</strong>
+                                </span>
+                            </a>
+                            <a class="store-button" href="https://play.google.com/store/apps" target="_blank" rel="noopener" aria-label="Baixar no Google Play">
+                                <span class="store-icon">G</span>
+                                <span>
+                                    <small data-i18n="app.googleSmall">Dispon&iacute;vel no</small>
+                                    <strong data-i18n="app.google">Google Play</strong>
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="phone-preview" aria-label="Previsualiza&ccedil;&atilde;o do app KinaJ&aacute;">
+                        <div class="phone-notch"></div>
+                        <div class="phone-screen">
+                            <div class="phone-food">
+                                <img src="https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?auto=format&fit=crop&w=700&q=82" alt="Pizza no app KinaJ&aacute;">
+                            </div>
+                            <h3>KinaJ&aacute;</h3>
+                            <div class="phone-row">
+                                <span data-i18n="app.preview1">Pizza favorita</span>
+                                <strong>18m</strong>
+                            </div>
+                            <div class="phone-row">
+                                <span data-i18n="app.preview2">Hamburger duplo</span>
+                                <strong>25m</strong>
+                            </div>
+                            <div class="phone-row">
+                                <span data-i18n="app.preview3">Mercado express</span>
+                                <strong>30m</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer" id="contacto">
+        <div class="footer-promo">
+            <div class="footer-promo-image" aria-hidden="true"></div>
+            <div class="footer-promo-copy">
+                <h2 data-i18n="footer.promo">Bons momentos come&ccedil;am com fome.</h2>
+                <span data-i18n="footer.seal">Feed good times</span>
+            </div>
         </div>
-    </body>
+
+        <div class="footer-main">
+            <div class="footer-links">
+                <div class="footer-col">
+                    <strong data-i18n="footer.about">Sobre o KinaJ&aacute;</strong>
+                    <a href="{{ url('/') }}" data-i18n="nav.home">Home</a>
+                    <a href="{{ url('/seja-parceiro') }}" data-i18n="nav.partner">Seja parceiro</a>
+                    <a href="{{ url('/carreiras') }}" data-i18n="nav.careers">Carreiras</a>
+                </div>
+                <div class="footer-col">
+                    <strong data-i18n="footer.services">Servi&ccedil;os</strong>
+                    <span data-i18n="footer.service1">Restaurantes</span>
+                    <span data-i18n="footer.service2">Mercado</span>
+                    <span data-i18n="footer.service3">Entregas expressas</span>
+                </div>
+                <div class="footer-col">
+                    <strong data-i18n="footer.contacts">Contactos</strong>
+                    <a href="mailto:hello@kinaja.ao">hello@kinaja.ao</a>
+                    <a href="mailto:parceiros@kinaja.ao">parceiros@kinaja.ao</a>
+                    <span>Luanda, Angola</span>
+                </div>
+            </div>
+
+            <div class="footer-brand-panel">
+                <div class="footer-logo">Kina<br>J&aacute;</div>
+                <div class="footer-tagline" data-i18n="footer.tagline">Pede bom. Recebe r&aacute;pido.</div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">&copy; 2026 KinaJ&aacute;. <span data-i18n="footer.rights">Todos os direitos
+                reservados.</span></div>
+    </footer>
+
+    <script>
+        const translations = {
+            pt: {
+                'announce.text': 'KinaJá está a chegar com entregas mais rápidas em Luanda.',
+                'announce.cta': 'Junte-se',
+                'nav.home': 'HOME',
+                'nav.partner': 'SEJA PARCEIRO',
+                'nav.careers': 'CARREIRAS',
+                'nav.signin': 'ENTRAR',
+                'home.badge': 'Delivery em Angola',
+                'home.title': 'Se estás com fome peça um <span>Kina Já</span>',
+                'home.lead': 'Comida, mercado e essenciais entregues com rapidez, cuidado e acompanhamento simples.',
+                'home.primary': 'Pedir agora',
+                'home.secondary': 'Ver carreiras',
+                'partner.badge': 'Venda com o KinaJá',
+                'partner.title': 'Transforma pedidos em <span>crescimento.</span>',
+                'partner.lead': 'Leve o seu restaurante, mercado ou loja para mais clientes com uma operação simples e moderna.',
+                'partner.primary': 'Quero ser parceiro',
+                'partner.secondary': 'Ver carreiras',
+                'careers.badge': 'Carreiras KinaJá',
+                'careers.title': 'Trabalha numa equipa que <span>entrega futuro.</span>',
+                'careers.lead': 'Junta-te a uma equipa que está a criar tecnologia, operação e logística para Angola.',
+                'careers.primary': 'Enviar candidatura',
+                'careers.secondary': 'Seja parceiro',
+                'stats.delivery': 'tempo médio de entrega',
+                'stats.partners': 'parceiros ativos',
+                'stats.orders': 'pedidos preparados',
+                'hero.orbit': 'fresh<br>fast<br>local',
+                'hero.badgeTitle': 'Pedido confirmado',
+                'hero.badgeText': 'A sua comida está a caminho.',
+                'app.badge': 'Apps KinaJá',
+                'app.title': 'Baixe o app e peça em segundos.',
+                'app.lead': 'Tenha restaurantes, mercado e entregas expressas no bolso. Disponível para iPhone e Android.',
+                'app.appleSmall': 'Baixar na',
+                'app.apple': 'App Store',
+                'app.googleSmall': 'Disponível no',
+                'app.google': 'Google Play',
+                'app.preview1': 'Pizza favorita',
+                'app.preview2': 'Hamburger duplo',
+                'app.preview3': 'Mercado express',
+                'home.sectionTitle': 'Tudo o que precisas numa só plataforma.',
+                'home.sectionLead': 'KinaJá liga clientes, restaurantes, mercados e estafetas numa experiência simples, moderna e preparada para crescer.',
+                'home.card1.title': 'Restaurantes',
+                'home.card1.text': 'Descobre pratos quentes, snacks e menus completos perto de ti.',
+                'home.card2.title': 'Mercado e lojas',
+                'home.card2.text': 'Compra essenciais, mercearia e conveniência sem perder tempo.',
+                'home.card3.title': 'Entrega expressa',
+                'home.card3.text': 'Acompanha cada pedido desde a preparação até à porta.',
+                'home.cardLink': 'Explorar →',
+                'home.card3.link': 'Juntar à equipa →',
+                'partner.panelTitle': 'Venda mais sem complicar a operação.',
+                'partner.panelLead': 'Publique o seu catálogo, receba pedidos e alcance clientes que querem comprar agora.',
+                'partner.sideTitle': 'Como funciona',
+                'partner.step1': 'Registamos o seu restaurante ou loja.',
+                'partner.step2': 'Configuramos menu, produtos e zonas de entrega.',
+                'partner.step3': 'Começa a receber pedidos com acompanhamento.',
+                'partner.email': 'Contactar equipa',
+                'careers.panelTitle': 'Constrói a entrega que move a cidade.',
+                'careers.panelLead': 'Estamos a juntar operadores, suporte, tecnologia e estafetas para criar uma experiência melhor em Angola.',
+                'careers.sideTitle': 'Vagas abertas',
+                'careers.role1': 'Estafetas parceiros',
+                'careers.role2': 'Suporte ao cliente',
+                'careers.role3': 'Operações e expansão',
+                'careers.email': 'Enviar candidatura',
+                'footer.promo': 'Bons momentos começam com fome.',
+                'footer.seal': 'Feed good times',
+                'footer.about': 'Sobre o KinaJá',
+                'footer.services': 'Serviços',
+                'footer.service1': 'Restaurantes',
+                'footer.service2': 'Mercado',
+                'footer.service3': 'Entregas expressas',
+                'footer.contacts': 'Contactos',
+                'footer.tagline': 'Pede bom. Recebe rápido.',
+                'footer.rights': 'Todos os direitos reservados.'
+            },
+            en: {
+                'announce.text': 'KinaJá is bringing faster delivery to Luanda.',
+                'announce.cta': 'Join us',
+                'nav.home': 'HOME',
+                'nav.partner': 'BECOME A PARTNER',
+                'nav.careers': 'CAREERS',
+                'nav.signin': 'Sign in',
+                'home.badge': 'Delivery in Angola',
+                'home.title': 'If you are hungry, order <span>Kina Já</span>',
+                'home.lead': 'Food, groceries, and essentials delivered fast with care and simple tracking.',
+                'home.primary': 'Order now',
+                'home.secondary': 'View careers',
+                'partner.badge': 'Sell with KinaJá',
+                'partner.title': 'Turn orders into <span>growth.</span>',
+                'partner.lead': 'Bring your restaurant, market, or store to more customers with a simple modern operation.',
+                'partner.primary': 'Become a partner',
+                'partner.secondary': 'View careers',
+                'careers.badge': 'KinaJá careers',
+                'careers.title': 'Work with a team that <span>delivers the future.</span>',
+                'careers.lead': 'Join a team building technology, operations, and logistics for Angola.',
+                'careers.primary': 'Apply now',
+                'careers.secondary': 'Become a partner',
+                'stats.delivery': 'average delivery time',
+                'stats.partners': 'active partners',
+                'stats.orders': 'orders prepared',
+                'hero.orbit': 'fresh<br>fast<br>local',
+                'hero.badgeTitle': 'Order confirmed',
+                'hero.badgeText': 'Your food is on the way.',
+                'app.badge': 'KinaJá apps',
+                'app.title': 'Download the app and order in seconds.',
+                'app.lead': 'Keep restaurants, markets, and express delivery in your pocket. Available for iPhone and Android.',
+                'app.appleSmall': 'Download on the',
+                'app.apple': 'App Store',
+                'app.googleSmall': 'Get it on',
+                'app.google': 'Google Play',
+                'app.preview1': 'Favorite pizza',
+                'app.preview2': 'Double burger',
+                'app.preview3': 'Express market',
+                'home.sectionTitle': 'Everything you need on one platform.',
+                'home.sectionLead': 'KinaJá connects customers, restaurants, markets, and couriers in a simple, modern experience built to grow.',
+                'home.card1.title': 'Restaurants',
+                'home.card1.text': 'Discover hot meals, snacks, and full menus near you.',
+                'home.card2.title': 'Markets and stores',
+                'home.card2.text': 'Buy essentials, groceries, and convenience items without losing time.',
+                'home.card3.title': 'Express delivery',
+                'home.card3.text': 'Track every order from preparation to your door.',
+                'home.cardLink': 'Explore →',
+                'home.card3.link': 'Join the team →',
+                'partner.panelTitle': 'Sell more without complicating operations.',
+                'partner.panelLead': 'Publish your catalog, receive orders, and reach customers ready to buy now.',
+                'partner.sideTitle': 'How it works',
+                'partner.step1': 'We register your restaurant or store.',
+                'partner.step2': 'We configure menu, products, and delivery zones.',
+                'partner.step3': 'You start receiving tracked orders.',
+                'partner.email': 'Contact the team',
+                'careers.panelTitle': 'Build the delivery network that moves the city.',
+                'careers.panelLead': 'We are bringing together operations, support, technology, and couriers to build a better experience in Angola.',
+                'careers.sideTitle': 'Open roles',
+                'careers.role1': 'Courier partners',
+                'careers.role2': 'Customer support',
+                'careers.role3': 'Operations and expansion',
+                'careers.email': 'Send application',
+                'footer.promo': 'Good times start with hunger.',
+                'footer.seal': 'Feed good times',
+                'footer.about': 'About KinaJá',
+                'footer.services': 'Services',
+                'footer.service1': 'Restaurants',
+                'footer.service2': 'Market',
+                'footer.service3': 'Express delivery',
+                'footer.contacts': 'Contacts',
+                'footer.tagline': 'Order good. Get it fast.',
+                'footer.rights': 'All rights reserved.'
+            }
+        };
+
+        const root = document.documentElement;
+        const langButtons = document.querySelectorAll('[data-lang]');
+
+        function setLanguage(language) {
+            const dictionary = translations[language] || translations.pt;
+            root.lang = language;
+            root.dataset.language = language;
+
+            document.querySelectorAll('[data-i18n]').forEach((element) => {
+                const key = element.dataset.i18n;
+                if (dictionary[key]) {
+                    element.textContent = dictionary[key];
+                }
+            });
+
+            document.querySelectorAll('[data-i18n-html]').forEach((element) => {
+                const key = element.dataset.i18nHtml;
+                if (dictionary[key]) {
+                    element.innerHTML = dictionary[key];
+                }
+            });
+
+            langButtons.forEach((button) => {
+                button.classList.toggle('is-active', button.dataset.lang === language);
+            });
+
+            try {
+                localStorage.setItem('kinaja-language', language);
+            } catch (error) {
+                // Ignore storage failures in private browsing contexts.
+            }
+        }
+
+        langButtons.forEach((button) => {
+            button.addEventListener('click', () => setLanguage(button.dataset.lang));
+        });
+
+        let savedLanguage = 'pt';
+        try {
+            savedLanguage = localStorage.getItem('kinaja-language') || 'pt';
+        } catch (error) {
+            savedLanguage = 'pt';
+        }
+
+        setLanguage(savedLanguage);
+    </script>
+</body>
+
 </html>

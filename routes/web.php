@@ -16,8 +16,16 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('welcome', ['page' => 'home']);
 });
+
+Route::get('/seja-parceiro', function () {
+    return view('welcome', ['page' => 'partner']);
+})->name('partner');
+
+Route::get('/carreiras', function () {
+    return view('welcome', ['page' => 'careers']);
+})->name('careers');
 
 Route::get('/linkstorage', function () {
     Artisan::call('storage:link');
