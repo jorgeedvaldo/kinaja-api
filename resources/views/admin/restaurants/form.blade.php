@@ -9,7 +9,7 @@
         <span class="table-title">{{ $restaurant ? 'Editar Restaurante' : 'Novo Restaurante' }}</span>
     </div>
     <div style="padding:24px">
-        <form method="POST" action="{{ $restaurant ? route('admin.restaurants.update', $restaurant) : route('admin.restaurants.store') }}">
+        <form method="POST" action="{{ $restaurant ? route('admin.restaurants.update', $restaurant) : route('admin.restaurants.store') }}" enctype="multipart/form-data">
             @csrf
             @if($restaurant) @method('PUT') @endif
 
@@ -29,8 +29,13 @@
             </div>
 
             <div class="form-group">
-                <label for="rf-image">Imagem (URL)</label>
-                <input type="text" id="rf-image" name="cover_image" value="{{ old('cover_image', $restaurant->cover_image ?? '') }}" placeholder="https://...">
+                <label for="rf-image">Imagem</label>
+                <input type="file" id="rf-image" name="cover_image" accept="image/*">
+                @if($restaurant && $restaurant->cover_image)
+                    <div style="margin-top: 10px;">
+                        <img src="{{ $restaurant->cover_image }}" alt="Imagem" style="max-height: 100px; border-radius: 4px;">
+                    </div>
+                @endif
             </div>
 
             <div class="form-group flex items-center gap-8">

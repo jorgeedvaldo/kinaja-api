@@ -9,7 +9,7 @@
         <span class="table-title">{{ $product ? 'Editar Produto' : 'Novo Produto' }}</span>
     </div>
     <div style="padding:24px">
-        <form method="POST" action="{{ $product ? route('admin.products.update', $product) : route('admin.products.store') }}">
+        <form method="POST" action="{{ $product ? route('admin.products.update', $product) : route('admin.products.store') }}" enctype="multipart/form-data">
             @csrf
             @if($product) @method('PUT') @endif
 
@@ -47,8 +47,13 @@
             </div>
 
             <div class="form-group">
-                <label for="pf-image">Imagem (URL)</label>
-                <input type="text" id="pf-image" name="image" value="{{ old('image', $product->image ?? '') }}" placeholder="https://...">
+                <label for="pf-image">Imagem</label>
+                <input type="file" id="pf-image" name="image" accept="image/*">
+                @if($product && $product->image)
+                    <div style="margin-top: 10px;">
+                        <img src="{{ $product->image }}" alt="Imagem" style="max-height: 100px; border-radius: 4px;">
+                    </div>
+                @endif
             </div>
 
             <div class="form-group flex items-center gap-8">

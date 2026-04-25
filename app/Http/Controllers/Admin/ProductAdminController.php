@@ -54,9 +54,9 @@ class ProductAdminController extends Controller
         $categories = Category::orderBy('name')->get();
 
         return view('admin.products.form', [
-            'product'              => null,
-            'restaurants'          => $restaurants,
-            'categories'           => $categories,
+            'product' => null,
+            'restaurants' => $restaurants,
+            'categories' => $categories,
             'selectedRestaurantId' => $restaurantId ?: ($restaurants->first()->id ?? null),
         ]);
     }
@@ -67,12 +67,12 @@ class ProductAdminController extends Controller
 
         $validated = $request->validate([
             'restaurant_id' => 'required|exists:restaurants,id',
-            'category_id'   => 'required|exists:categories,id',
-            'name'          => 'required|string|max:255',
-            'description'   => 'nullable|string',
-            'price'         => 'required|numeric|min:0',
-            'image'         => 'nullable|string',
-            'is_available'  => 'nullable',
+            'category_id' => 'required|exists:categories,id',
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'price' => 'required|numeric|min:0',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
+            'is_available' => 'nullable',
         ]);
 
         // Ownership check
@@ -84,6 +84,13 @@ class ProductAdminController extends Controller
         }
 
         $validated['is_available'] = $request->has('is_available');
+
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('image/products', 'public');
+            $validated['image'] = '/storage/' . $path;
+        } else {
+            unset($validated['image']);
+        }
 
         Product::create($validated);
 
@@ -108,9 +115,9 @@ class ProductAdminController extends Controller
         $categories = Category::orderBy('name')->get();
 
         return view('admin.products.form', [
-            'product'              => $product,
-            'restaurants'          => $restaurants,
-            'categories'           => $categories,
+            'product' => $product,
+            'restaurants' => $restaurants,
+            'categories' => $categories,
             'selectedRestaurantId' => $product->restaurant_id,
         ]);
     }
@@ -125,12 +132,12 @@ class ProductAdminController extends Controller
 
         $validated = $request->validate([
             'restaurant_id' => 'required|exists:restaurants,id',
-            'category_id'   => 'required|exists:categories,id',
-            'name'          => 'required|string|max:255',
-            'description'   => 'nullable|string',
-            'price'         => 'required|numeric|min:0',
-            'image'         => 'nullable|string',
-            'is_available'  => 'nullable',
+            'category_id' => 'required|exists:categories,id',
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'price' => 'required|numeric|min:0',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
+            'is_available' => 'nullable',
         ]);
 
         // Ownership check on new restaurant_id
@@ -142,6 +149,13 @@ class ProductAdminController extends Controller
         }
 
         $validated['is_available'] = $request->has('is_available');
+
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('image/products', 'public');
+            $validated['image'] = '/storage/' . $path;
+        } else {
+            unset($validated['image']);
+        }
 
         $product->update($validated);
 

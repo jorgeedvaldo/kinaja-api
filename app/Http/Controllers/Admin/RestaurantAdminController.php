@@ -31,12 +31,19 @@ class RestaurantAdminController extends Controller
         $validated = $request->validate([
             'name'           => 'required|string|max:255',
             'cuisine_type'   => 'nullable|string|max:255',
-            'cover_image'    => 'nullable|string',
+            'cover_image'    => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
             'prep_time_mins' => 'integer|min:1',
             'is_open'        => 'nullable',
         ]);
 
         $validated['is_open'] = $request->has('is_open');
+
+        if ($request->hasFile('cover_image')) {
+            $path = $request->file('cover_image')->store('image/restaurants', 'public');
+            $validated['cover_image'] = '/storage/' . $path;
+        } else {
+            unset($validated['cover_image']);
+        }
 
         $request->user()->restaurants()->create($validated);
 
@@ -64,12 +71,19 @@ class RestaurantAdminController extends Controller
         $validated = $request->validate([
             'name'           => 'required|string|max:255',
             'cuisine_type'   => 'nullable|string|max:255',
-            'cover_image'    => 'nullable|string',
+            'cover_image'    => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
             'prep_time_mins' => 'integer|min:1',
             'is_open'        => 'nullable',
         ]);
 
         $validated['is_open'] = $request->has('is_open');
+
+        if ($request->hasFile('cover_image')) {
+            $path = $request->file('cover_image')->store('image/restaurants', 'public');
+            $validated['cover_image'] = '/storage/' . $path;
+        } else {
+            unset($validated['cover_image']);
+        }
 
         $restaurant->update($validated);
 
