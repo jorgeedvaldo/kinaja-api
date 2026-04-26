@@ -185,6 +185,45 @@
             color: var(--primary);
         }
 
+        .menu-toggle {
+            display: none;
+            width: 46px;
+            height: 46px;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 5px;
+            border: 1px solid var(--border-medium);
+            border-radius: 12px;
+            background: var(--surface);
+            cursor: pointer;
+            box-shadow: 0 12px 28px var(--shadow-light);
+        }
+
+        .menu-toggle span {
+            width: 20px;
+            height: 2px;
+            border-radius: 999px;
+            background: var(--dark);
+            transition: transform 180ms ease, opacity 180ms ease;
+        }
+
+        .menu-toggle.is-open span:nth-child(1) {
+            transform: translateY(7px) rotate(45deg);
+        }
+
+        .menu-toggle.is-open span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-toggle.is-open span:nth-child(3) {
+            transform: translateY(-7px) rotate(-45deg);
+        }
+
+        .mobile-menu {
+            display: none;
+        }
+
         .lang-toggle {
             display: inline-grid;
             grid-template-columns: 1fr 1fr;
@@ -983,16 +1022,67 @@
 
         @media (max-width: 980px) {
             .nav {
-                align-items: flex-start;
-                flex-direction: column;
-                padding: 18px 0;
+                min-height: 72px;
+                align-items: center;
+                flex-direction: row;
+                padding: 0;
             }
 
             .nav-links,
             .nav-actions {
-                width: 100%;
+                display: none;
+            }
+
+            .menu-toggle {
+                display: inline-flex;
+            }
+
+            .mobile-menu {
+                width: min(1180px, calc(100% - 40px));
+                max-height: 0;
+                display: grid;
+                gap: 0;
+                margin: 0 auto;
+                overflow: hidden;
+                opacity: 0;
+                pointer-events: none;
+                visibility: hidden;
+                transition: max-height 220ms ease, opacity 180ms ease, padding 220ms ease, visibility 220ms ease;
+            }
+
+            .mobile-menu.is-open {
+                max-height: 430px;
+                padding: 0 0 22px;
+                opacity: 1;
+                pointer-events: auto;
+                visibility: visible;
+            }
+
+            .mobile-menu a {
+                min-height: 52px;
+                display: flex;
+                align-items: center;
+                border-bottom: 1px solid var(--border-medium);
+                color: var(--dark);
+                font-size: 1.02rem;
+                font-weight: 900;
+            }
+
+            .mobile-menu a[aria-current="page"] {
+                color: var(--primary);
+            }
+
+            .mobile-language {
+                display: flex;
+                align-items: center;
                 justify-content: space-between;
-                flex-wrap: wrap;
+                gap: 16px;
+                padding-top: 18px;
+            }
+
+            .mobile-language>span {
+                color: var(--text-secondary);
+                font-weight: 900;
             }
 
             .hero,
@@ -1035,21 +1125,10 @@
             }
 
             .nav,
+            .mobile-menu,
             .hero,
             .section-inner {
                 width: min(100% - 28px, 1180px);
-            }
-
-            .nav-links {
-                gap: 12px;
-            }
-
-            .nav-links a {
-                font-size: 0.9rem;
-            }
-
-            .nav-actions .btn {
-                display: none;
             }
 
             .hero h1 {
@@ -1154,7 +1233,30 @@
                     <button type="button" data-lang="en">EN</button>
                 </div>
             </div>
+
+            <button class="menu-toggle" type="button" aria-label="Abrir menu" aria-controls="mobile-menu"
+                aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </nav>
+
+        <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+            <a href="{{ url('/') }}" data-i18n="nav.home" @if($currentPage === 'home') aria-current="page"
+            @endif>HOME</a>
+            <a href="{{ url('/seja-parceiro') }}" data-i18n="nav.partner" @if($currentPage === 'partner')
+            aria-current="page" @endif>SEJA PARCEIRO</a>
+            <a href="{{ url('/carreiras') }}" data-i18n="nav.careers" @if($currentPage === 'careers') aria-current="page"
+            @endif>CARREIRAS</a>
+            <div class="mobile-language">
+                <span data-i18n="mobile.language">Idioma</span>
+                <div class="lang-toggle" aria-label="Selecionar idioma">
+                    <button type="button" class="is-active" data-lang="pt">PT</button>
+                    <button type="button" data-lang="en">EN</button>
+                </div>
+            </div>
+        </div>
     </header>
 
     <main>
@@ -1400,6 +1502,7 @@
                 'nav.partner': 'SEJA PARCEIRO',
                 'nav.careers': 'CARREIRAS',
                 'nav.signin': 'ENTRAR',
+                'mobile.language': 'Idioma',
                 'home.badge': 'Delivery em Angola',
                 'home.title': 'Se estás com fome peça um <span>Kina Já</span>',
                 'home.lead': 'Comida, mercado e essenciais entregues com rapidez, cuidado e acompanhamento simples.',
@@ -1473,6 +1576,7 @@
                 'nav.partner': 'BECOME A PARTNER',
                 'nav.careers': 'CAREERS',
                 'nav.signin': 'Sign in',
+                'mobile.language': 'Language',
                 'home.badge': 'Delivery in Angola',
                 'home.title': 'If you are hungry, order <span>Kina Já</span>',
                 'home.lead': 'Food, groceries, and essentials delivered fast with care and simple tracking.',
@@ -1543,6 +1647,8 @@
 
         const root = document.documentElement;
         const langButtons = document.querySelectorAll('[data-lang]');
+        const menuToggle = document.querySelector('.menu-toggle');
+        const mobileMenu = document.querySelector('#mobile-menu');
 
         function setLanguage(language) {
             const dictionary = translations[language] || translations.pt;
@@ -1574,9 +1680,34 @@
             }
         }
 
-        langButtons.forEach((button) => {
-            button.addEventListener('click', () => setLanguage(button.dataset.lang));
+        document.addEventListener('click', (event) => {
+            const languageButton = event.target.closest('[data-lang]');
+            if (!languageButton) {
+                return;
+            }
+
+            setLanguage(languageButton.dataset.lang);
         });
+
+        if (menuToggle && mobileMenu) {
+            menuToggle.addEventListener('click', () => {
+                const isOpen = mobileMenu.classList.toggle('is-open');
+                menuToggle.classList.toggle('is-open', isOpen);
+                menuToggle.setAttribute('aria-expanded', String(isOpen));
+                menuToggle.setAttribute('aria-label', isOpen ? 'Fechar menu' : 'Abrir menu');
+                mobileMenu.setAttribute('aria-hidden', String(!isOpen));
+            });
+
+            mobileMenu.querySelectorAll('a').forEach((link) => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.remove('is-open');
+                    menuToggle.classList.remove('is-open');
+                    menuToggle.setAttribute('aria-expanded', 'false');
+                    menuToggle.setAttribute('aria-label', 'Abrir menu');
+                    mobileMenu.setAttribute('aria-hidden', 'true');
+                });
+            });
+        }
 
         let savedLanguage = 'pt';
         try {
