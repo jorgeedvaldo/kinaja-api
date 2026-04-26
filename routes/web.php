@@ -82,4 +82,15 @@ Route::prefix('admin')->middleware(['auth', 'admin.role'])->group(function () {
     // Drivers
     Route::get('/drivers', [DriverAdminController::class, 'index'])->name('admin.drivers.index');
     Route::get('/drivers/locations', [DriverAdminController::class, 'locations'])->name('admin.drivers.locations');
+
+    // Applications (Admin only)
+    Route::get('/driver-applications', [\App\Http\Controllers\Admin\DriverApplicationAdminController::class, 'index'])->name('admin.driver_applications.index');
+    Route::get('/driver-applications/{application}', [\App\Http\Controllers\Admin\DriverApplicationAdminController::class, 'show'])->name('admin.driver_applications.show');
+    Route::patch('/driver-applications/{application}/status', [\App\Http\Controllers\Admin\DriverApplicationAdminController::class, 'updateStatus'])->name('admin.driver_applications.updateStatus');
+    Route::post('/driver-applications/{application}/upload-document', [\App\Http\Controllers\Admin\DriverApplicationAdminController::class, 'uploadDocument'])->name('admin.driver_applications.uploadDocument');
+    
+    Route::get('/restaurant-applications', [\App\Http\Controllers\Admin\RestaurantApplicationAdminController::class, 'index'])->name('admin.restaurant_applications.index');
+    Route::get('/restaurant-applications/{application}', [\App\Http\Controllers\Admin\RestaurantApplicationAdminController::class, 'show'])->name('admin.restaurant_applications.show');
+    Route::patch('/restaurant-applications/{application}/status', [\App\Http\Controllers\Admin\RestaurantApplicationAdminController::class, 'updateStatus'])->name('admin.restaurant_applications.updateStatus');
+    Route::post('/restaurant-applications/{application}/upload-document', [\App\Http\Controllers\Admin\RestaurantApplicationAdminController::class, 'uploadDocument'])->name('admin.restaurant_applications.uploadDocument');
 });
