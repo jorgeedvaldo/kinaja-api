@@ -1309,8 +1309,8 @@
 
                     <div class="hero-actions">
                         <a class="btn btn-primary"
-                            href="{{ $currentPage === 'home' ? url('/seja-parceiro') : '#contacto' }}"
-                            data-i18n="{{ $content['primaryKey'] }}">Pedir agora</a>
+                            href="{{ $currentPage === 'home' ? '#baixar-app' : '#contacto' }}"
+                            data-i18n="{{ $content['primaryKey'] }}">Baixar App</a>
                         <a class="btn"
                             href="{{ $currentPage === 'careers' ? url('/seja-parceiro') : url('/carreiras') }}"
                             data-i18n="{{ $content['secondaryKey'] }}">Ver carreiras</a>
@@ -1333,7 +1333,7 @@
                 </div>
 
                 <div class="hero-media" aria-label="Comida KinaJ&aacute;">
-                    <div class="spice-orbit" data-i18n="hero.orbit">fresh<br>fast<br>local</div>
+                    <div class="spice-orbit" data-i18n-html="hero.orbit">quente<br>rápido<br>saboroso</div>
                     <figure class="food-card">
                         <img src="{{ $content['heroImage'] }}" alt="{{ $content['heroAlt'] }}">
                     </figure>
@@ -1350,7 +1350,7 @@
                 <div class="section-inner">
                     <div class="section-heading">
                         <h2 data-i18n="home.sectionTitle">Tudo o que precisas numa s&oacute; plataforma.</h2>
-                        <p data-i18n="home.sectionLead">KinaJ&aacute; liga clientes, restaurantes, mercados e estafetas numa
+                        <p data-i18n="home.sectionLead">KinaJ&aacute; liga clientes, restaurantes e estafetas numa
                             experi&ecirc;ncia simples, moderna e preparada para crescer.</p>
                     </div>
 
@@ -1368,16 +1368,6 @@
                         <article class="feature-card">
                             <div>
                                 <div class="feature-icon">02</div>
-                                <h3 data-i18n="home.card2.title">Mercado e lojas</h3>
-                                <p data-i18n="home.card2.text">Compra essenciais, mercearia e conveni&ecirc;ncia sem perder
-                                    tempo.</p>
-                            </div>
-                            <a href="{{ url('/seja-parceiro') }}" data-i18n="home.cardLink">Explorar &rarr;</a>
-                        </article>
-
-                        <article class="feature-card">
-                            <div>
-                                <div class="feature-icon">03</div>
                                 <h3 data-i18n="home.card3.title">Entrega expressa</h3>
                                 <p data-i18n="home.card3.text">Acompanha cada pedido desde a prepara&ccedil;&atilde;o
                                     at&eacute; &agrave; porta.</p>
@@ -1542,7 +1532,6 @@
                 <div class="footer-col">
                     <strong data-i18n="footer.services">Servi&ccedil;os</strong>
                     <span data-i18n="footer.service1">Restaurantes</span>
-                    <span data-i18n="footer.service2">Mercado</span>
                     <span data-i18n="footer.service3">Entregas expressas</span>
                 </div>
                 <div class="footer-col">
@@ -1575,12 +1564,12 @@
                 'mobile.language': 'Idioma',
                 'home.badge': 'Delivery em Angola',
                 'home.title': 'Se estás com fome peça um <span>Kina Já</span>',
-                'home.lead': 'Comida, mercado e essenciais entregues com rapidez, cuidado e acompanhamento simples.',
-                'home.primary': 'Pedir agora',
+                'home.lead': 'A sua comida favorita entregue com rapidez, cuidado e acompanhamento simples.',
+                'home.primary': 'Baixar App',
                 'home.secondary': 'Ver carreiras',
                 'partner.badge': 'Venda com o KinaJá',
                 'partner.title': 'Transforma pedidos em <span>crescimento.</span>',
-                'partner.lead': 'Leve o seu restaurante, mercado ou loja para mais clientes com uma operação simples e moderna.',
+                'partner.lead': 'Leve o seu restaurante para mais clientes com uma operação simples e moderna.',
                 'partner.primary': 'Quero ser parceiro',
                 'partner.secondary': 'Ver carreiras',
                 'careers.badge': 'Carreiras KinaJá',
@@ -1591,25 +1580,23 @@
                 'stats.delivery': 'tempo médio de entrega',
                 'stats.partners': 'parceiros ativos',
                 'stats.orders': 'pedidos preparados',
-                'hero.orbit': 'fresh<br>fast<br>local',
+                'hero.orbit': 'quente<br>rápido<br>saboroso',
                 'hero.badgeTitle': 'Pedido confirmado',
                 'hero.badgeText': 'A sua comida está a caminho.',
                 'app.badge': 'Apps KinaJá',
                 'app.title': 'Baixe o app e peça em segundos.',
-                'app.lead': 'Tenha restaurantes, mercado e entregas expressas no bolso. Disponível para iPhone e Android.',
+                'app.lead': 'Tenha os melhores restaurantes e entregas expressas no bolso. Disponível para iPhone e Android.',
                 'app.appleSmall': 'Baixar na',
                 'app.apple': 'App Store',
                 'app.googleSmall': 'Disponível no',
                 'app.google': 'Google Play',
                 'app.preview1': 'Pizza favorita',
                 'app.preview2': 'Hamburger duplo',
-                'app.preview3': 'Mercado express',
+                'app.preview3': 'Pratos locais',
                 'home.sectionTitle': 'Tudo o que precisas numa só plataforma.',
-                'home.sectionLead': 'KinaJá liga clientes, restaurantes, mercados e estafetas numa experiência simples, moderna e preparada para crescer.',
+                'home.sectionLead': 'KinaJá liga clientes, restaurantes e estafetas numa experiência simples, moderna e preparada para crescer.',
                 'home.card1.title': 'Restaurantes',
                 'home.card1.text': 'Descobre pratos quentes, snacks e menus completos perto de ti.',
-                'home.card2.title': 'Mercado e lojas',
-                'home.card2.text': 'Compra essenciais, mercearia e conveniência sem perder tempo.',
                 'home.card3.title': 'Entrega expressa',
                 'home.card3.text': 'Acompanha cada pedido desde a preparação até à porta.',
                 'home.cardLink': 'Explorar →',
@@ -1629,7 +1616,7 @@
                 'partner.panelTitle': 'Venda mais sem complicar a operação.',
                 'partner.panelLead': 'Publique o seu catálogo, receba pedidos e alcance clientes que querem comprar agora.',
                 'partner.sideTitle': 'Como funciona',
-                'partner.step1': 'Registamos o seu restaurante ou loja.',
+                'partner.step1': 'Registamos o seu restaurante.',
                 'partner.step2': 'Configuramos menu, produtos e zonas de entrega.',
                 'partner.step3': 'Começa a receber pedidos com acompanhamento.',
                 'partner.email': 'Contactar equipa',
@@ -1647,7 +1634,6 @@
                 'footer.about': 'Sobre o KinaJá',
                 'footer.services': 'Serviços',
                 'footer.service1': 'Restaurantes',
-                'footer.service2': 'Mercado',
                 'footer.service3': 'Entregas expressas',
                 'footer.contacts': 'Contactos',
                 'footer.tagline': 'Pede bom. Recebe rápido.',
@@ -1663,12 +1649,12 @@
                 'mobile.language': 'Language',
                 'home.badge': 'Delivery in Angola',
                 'home.title': 'If you are hungry, order <span>Kina Já</span>',
-                'home.lead': 'Food, groceries, and essentials delivered fast with care and simple tracking.',
-                'home.primary': 'Order now',
+                'home.lead': 'Your favorite food delivered fast with care and simple tracking.',
+                'home.primary': 'Download App',
                 'home.secondary': 'View careers',
                 'partner.badge': 'Sell with KinaJá',
                 'partner.title': 'Turn orders into <span>growth.</span>',
-                'partner.lead': 'Bring your restaurant, market, or store to more customers with a simple modern operation.',
+                'partner.lead': 'Bring your restaurant to more customers with a simple modern operation.',
                 'partner.primary': 'Become a partner',
                 'partner.secondary': 'View careers',
                 'careers.badge': 'KinaJá careers',
@@ -1679,25 +1665,23 @@
                 'stats.delivery': 'average delivery time',
                 'stats.partners': 'active partners',
                 'stats.orders': 'orders prepared',
-                'hero.orbit': 'fresh<br>fast<br>local',
+                'hero.orbit': 'hot<br>fast<br>tasty',
                 'hero.badgeTitle': 'Order confirmed',
                 'hero.badgeText': 'Your food is on the way.',
                 'app.badge': 'KinaJá apps',
                 'app.title': 'Download the app and order in seconds.',
-                'app.lead': 'Keep restaurants, markets, and express delivery in your pocket. Available for iPhone and Android.',
+                'app.lead': 'Keep the best restaurants and express delivery in your pocket. Available for iPhone and Android.',
                 'app.appleSmall': 'Download on the',
                 'app.apple': 'App Store',
                 'app.googleSmall': 'Get it on',
                 'app.google': 'Google Play',
                 'app.preview1': 'Favorite pizza',
                 'app.preview2': 'Double burger',
-                'app.preview3': 'Express market',
+                'app.preview3': 'Local dishes',
                 'home.sectionTitle': 'Everything you need on one platform.',
-                'home.sectionLead': 'KinaJá connects customers, restaurants, markets, and couriers in a simple, modern experience built to grow.',
+                'home.sectionLead': 'KinaJá connects customers, restaurants, and couriers in a simple, modern experience built to grow.',
                 'home.card1.title': 'Restaurants',
                 'home.card1.text': 'Discover hot meals, snacks, and full menus near you.',
-                'home.card2.title': 'Markets and stores',
-                'home.card2.text': 'Buy essentials, groceries, and convenience items without losing time.',
                 'home.card3.title': 'Express delivery',
                 'home.card3.text': 'Track every order from preparation to your door.',
                 'home.cardLink': 'Explore →',
@@ -1717,7 +1701,7 @@
                 'partner.panelTitle': 'Sell more without complicating operations.',
                 'partner.panelLead': 'Publish your catalog, receive orders, and reach customers ready to buy now.',
                 'partner.sideTitle': 'How it works',
-                'partner.step1': 'We register your restaurant or store.',
+                'partner.step1': 'We register your restaurant.',
                 'partner.step2': 'We configure menu, products, and delivery zones.',
                 'partner.step3': 'You start receiving tracked orders.',
                 'partner.email': 'Contact the team',
@@ -1735,7 +1719,6 @@
                 'footer.about': 'About KinaJá',
                 'footer.services': 'Services',
                 'footer.service1': 'Restaurants',
-                'footer.service2': 'Market',
                 'footer.service3': 'Express delivery',
                 'footer.contacts': 'Contacts',
                 'footer.tagline': 'Order good. Get it fast.',
