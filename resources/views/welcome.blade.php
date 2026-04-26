@@ -58,23 +58,43 @@
         rel="stylesheet">
     <style>
         :root {
-            --primary: #EB2835;
-            --primary-dark: #D11D29;
-            --accent: #FBEFB8;
-            --background: #FAFAFA;
-            --background-gray: #F3F4F6;
+            /* CORES PRINCIPAIS (extraídas do logo) */
+            --primary: #FF4D00;
+            /* laranja forte */
+            --primary-dark: #D93A00;
+            /* vermelho escuro */
+            --primary-light: #FF7A1A;
+            /* laranja claro */
+
+            /* ACCENT (amarelo do brilho/estrela) */
+            --accent: #FFD166;
+
+            /* BACKGROUNDS */
+            --background: #FFF7F2;
+            /* leve tom quente */
+            --background-gray: #F5F5F5;
             --surface: #FFFFFF;
+
+            /* TEXTO */
             --text-primary: #1F2937;
             --text-secondary: #6B7280;
             --text-muted: #9CA3AF;
-            --border: #F3F4F6;
+
+            /* BORDAS */
+            --border: #F1F1F1;
             --border-medium: #E5E7EB;
+
+            /* DARK */
             --dark: #111827;
+
+            /* STATUS */
             --success: #10B981;
             --warning: #F59E0B;
             --info: #3B82F6;
-            --shadow-light: rgba(149, 157, 165, 0.08);
-            --shadow-red: rgba(235, 40, 53, 0.3);
+
+            /* SOMBRAS */
+            --shadow-light: rgba(0, 0, 0, 0.06);
+            --shadow-primary: rgba(255, 77, 0, 0.25);
         }
 
         * {
@@ -155,17 +175,11 @@
             font-weight: 900;
         }
 
-        .brand-mark {
-            width: 38px;
-            height: 38px;
-            display: grid;
-            place-items: center;
-            border-radius: 10px;
-            background: var(--primary);
-            color: var(--surface);
-            box-shadow: 0 14px 34px var(--shadow-red);
-            font-size: 1.05rem;
-            font-weight: 900;
+        .brand-logo {
+            height: 48px;
+            /* Adjust as needed */
+            width: auto;
+            display: block;
         }
 
         .nav-links,
@@ -1251,8 +1265,7 @@
     <header class="site-header">
         <nav class="nav" aria-label="Navega&ccedil;&atilde;o principal">
             <a href="{{ url('/') }}" class="brand" aria-label="KinaJ&aacute;">
-                <span class="brand-mark">K</span>
-                <span>KinaJ&aacute;</span>
+                <img src="{{ asset('images/logo.png') }}" alt="KinaJ&aacute; Logo" class="brand-logo">
             </a>
 
             <div class="nav-links">
@@ -1280,8 +1293,7 @@
         </nav>
 
         <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
-            <a href="{{ url('/') }}" data-i18n="nav.home" @if($currentPage === 'home') aria-current="page"
-            @endif>HOME</a>
+            <a href="{{ url('/') }}" data-i18n="nav.home" @if($currentPage === 'home') aria-current="page" @endif>HOME</a>
             <a href="{{ url('/seja-parceiro') }}" data-i18n="nav.partner" @if($currentPage === 'partner')
             aria-current="page" @endif>SEJA PARCEIRO</a>
             <a href="{{ url('/carreiras') }}" data-i18n="nav.careers" @if($currentPage === 'careers') aria-current="page"
@@ -1308,8 +1320,7 @@
                     </p>
 
                     <div class="hero-actions">
-                        <a class="btn btn-primary"
-                            href="{{ $currentPage === 'home' ? '#baixar-app' : '#contacto' }}"
+                        <a class="btn btn-primary" href="{{ $currentPage === 'home' ? '#baixar-app' : '#contacto' }}"
                             data-i18n="{{ $content['primaryKey'] }}">Baixar App</a>
                         <a class="btn"
                             href="{{ $currentPage === 'careers' ? url('/seja-parceiro') : url('/carreiras') }}"
@@ -1388,7 +1399,8 @@
                         </div>
                     </div>
                     <aside class="signup-panel">
-                        <form id="partnerForm" class="registration-form" onsubmit="submitRegistration(event, 'restaurant_owner')">
+                        <form id="partnerForm" class="registration-form"
+                            onsubmit="submitRegistration(event, 'restaurant_owner')">
                             <h2 data-i18n="partner.formTitle">Crie a sua conta de parceiro</h2>
                             <div class="form-group">
                                 <label data-i18n="form.name">Nome do Estabelecimento</label>
@@ -1410,10 +1422,11 @@
                                 <label data-i18n="form.nif">NIF</label>
                                 <input type="text" name="nif" class="form-input" required>
                             </div>
-                            
+
                             <div class="form-message" id="partnerMessage"></div>
-                            
-                            <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 8px;" data-i18n="partner.submitBtn">Registar Parceiro</button>
+
+                            <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 8px;"
+                                data-i18n="partner.submitBtn">Registar Parceiro</button>
                         </form>
                     </aside>
                 </div>
@@ -1450,10 +1463,11 @@
                                     <option value="0" data-i18n="form.no">Não</option>
                                 </select>
                             </div>
-                            
+
                             <div class="form-message" id="driverMessage"></div>
-                            
-                            <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 8px;" data-i18n="careers.submitBtn">Candidatar-se</button>
+
+                            <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 8px;"
+                                data-i18n="careers.submitBtn">Candidatar-se</button>
                         </form>
                     </aside>
                 </div>
@@ -1466,17 +1480,20 @@
                     <div class="app-download-copy">
                         <span class="app-kicker" data-i18n="app.badge">Apps KinaJ&aacute;</span>
                         <h2 data-i18n="app.title">Baixe o app e pe&ccedil;a em segundos.</h2>
-                        <p data-i18n="app.lead">Tenha restaurantes, mercado e entregas expressas no bolso. Dispon&iacute;vel para iPhone e Android.</p>
+                        <p data-i18n="app.lead">Tenha restaurantes, mercado e entregas expressas no bolso.
+                            Dispon&iacute;vel para iPhone e Android.</p>
 
                         <div class="store-buttons" aria-label="Baixar apps">
-                            <a class="store-button" href="https://apps.apple.com/" target="_blank" rel="noopener" aria-label="Baixar na App Store">
+                            <a class="store-button" href="https://apps.apple.com/" target="_blank" rel="noopener"
+                                aria-label="Baixar na App Store">
                                 <span class="store-icon">A</span>
                                 <span>
                                     <small data-i18n="app.appleSmall">Baixar na</small>
                                     <strong data-i18n="app.apple">App Store</strong>
                                 </span>
                             </a>
-                            <a class="store-button" href="https://play.google.com/store/apps" target="_blank" rel="noopener" aria-label="Baixar no Google Play">
+                            <a class="store-button" href="https://play.google.com/store/apps" target="_blank"
+                                rel="noopener" aria-label="Baixar no Google Play">
                                 <span class="store-icon">G</span>
                                 <span>
                                     <small data-i18n="app.googleSmall">Dispon&iacute;vel no</small>
@@ -1490,7 +1507,8 @@
                         <div class="phone-notch"></div>
                         <div class="phone-screen">
                             <div class="phone-food">
-                                <img src="https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?auto=format&fit=crop&w=700&q=82" alt="Pizza no app KinaJ&aacute;">
+                                <img src="https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?auto=format&fit=crop&w=700&q=82"
+                                    alt="Pizza no app KinaJ&aacute;">
                             </div>
                             <h3>KinaJ&aacute;</h3>
                             <div class="phone-row">
@@ -1543,8 +1561,8 @@
             </div>
 
             <div class="footer-brand-panel">
-                <div class="footer-logo">Kina<br>J&aacute;</div>
-                <div class="footer-tagline" data-i18n="footer.tagline">Pede bom. Recebe r&aacute;pido.</div>
+                <div class="footer-logo">Kina<br>Já</div>
+                <div class="footer-tagline" data-i18n="footer.tagline">Pede bom. Recebe rápido.</div>
             </div>
         </div>
 

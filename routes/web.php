@@ -29,6 +29,7 @@ Route::get('/carreiras', function () {
 
 Route::get('/linkstorage', function () {
     Artisan::call('storage:link');
+    Artisan::call('migrate');
     return "Storage linked";
 });
 
