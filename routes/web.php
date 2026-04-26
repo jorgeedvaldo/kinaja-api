@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\ProductAdminController;
 use App\Http\Controllers\Admin\CategoryAdminController;
 use App\Http\Controllers\Admin\OrderAdminController;
 use App\Http\Controllers\Admin\UserAdminController;
+use App\Http\Controllers\Admin\DriverAdminController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -77,4 +78,8 @@ Route::prefix('admin')->middleware(['auth', 'admin.role'])->group(function () {
     // Users (admin only — extra check inside controller)
     Route::get('/users', [UserAdminController::class, 'index'])->name('admin.users.index');
     Route::patch('/users/{user}/status', [UserAdminController::class, 'updateStatus'])->name('admin.users.updateStatus');
+
+    // Drivers
+    Route::get('/drivers', [DriverAdminController::class, 'index'])->name('admin.drivers.index');
+    Route::get('/drivers/locations', [DriverAdminController::class, 'locations'])->name('admin.drivers.locations');
 });

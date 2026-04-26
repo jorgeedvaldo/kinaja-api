@@ -8,6 +8,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('admin_assets/css/admin.css') }}">
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
 <div class="app-shell">
@@ -42,6 +44,10 @@
                 <span>Categorias</span>
             </a>
             @if(auth()->user()->isAdmin())
+            <a class="nav-item {{ request()->routeIs('admin.drivers.*') ? 'active' : '' }}" href="{{ route('admin.drivers.index') }}">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+                <span>Motoristas</span>
+            </a>
             <a class="nav-item {{ request()->routeIs('admin.users.*') ? 'active' : '' }}" href="{{ route('admin.users.index') }}">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
                 <span>Utilizadores</span>
@@ -77,21 +83,6 @@
             </div>
         </header>
         <div class="content-area">
-            {{-- Flash messages --}}
-            @if(session('success'))
-                <div class="toast-flash success">{{ session('success') }}</div>
-            @endif
-            @if(session('error'))
-                <div class="toast-flash error">{{ session('error') }}</div>
-            @endif
-            @if($errors->any())
-                <div class="toast-flash error">
-                    @foreach($errors->all() as $error)
-                        {{ $error }}<br>
-                    @endforeach
-                </div>
-            @endif
-
             @yield('content')
         </div>
     </main>
@@ -107,10 +98,82 @@ document.getElementById('menu-toggle').addEventListener('click', function() {
     if (el) el.textContent = new Date().toLocaleString('pt-AO', { weekday: 'short', day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' });
     setTimeout(updateClock, 30000);
 })();
-// Auto-hide flash messages
-document.querySelectorAll('.toast-flash').forEach(function(el) {
-    setTimeout(function() { el.style.opacity = '0'; setTimeout(function() { el.remove(); }, 300); }, 4000);
+
+// SweetAlert2 Setup & Interceptors
+const Toast = Swal.mixin({
+    toast: true, position: 'top-end', showConfirmButton: false, timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+});
+
+@if(session('success')) Toast.fire({ icon: 'success', title: "{{ session('success') }}" }); @endif
+@if(session('error')) Toast.fire({ icon: 'error', title: "{{ session('error') }}" }); @endif
+@if($errors->any()) Toast.fire({ icon: 'error', title: "Erro de validação!" }); @endif
+
+document.addEventListener('submit', async function(e) {
+    const form = e.target;
+
+    // 1. Confirmation Interceptor
+    if (form.hasAttribute('data-confirm')) {
+        e.preventDefault();
+        const msg = form.getAttribute('data-confirm');
+        const result = await Swal.fire({
+            title: 'Atenção', text: msg, icon: 'warning',
+            showCancelButton: true, confirmButtonColor: '#EB2835', cancelButtonColor: '#6B7280',
+            confirmButtonText: 'Sim, confirmar!', cancelButtonText: 'Cancelar'
+        });
+        
+        if (result.isConfirmed) {
+            form.removeAttribute('data-confirm'); // prevent infinite loop
+            // If it's also an ajax form, let the next block handle it
+            if(!form.classList.contains('ajax-form')) {
+                form.submit();
+            } else {
+                form.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
+            }
+        }
+        return;
+    }
+
+    // 2. Ajax Form Interceptor (Micro-SPA)
+    if (form.classList.contains('ajax-form') && !form.hasAttribute('data-confirm')) {
+        e.preventDefault();
+        let btn = form.querySelector('button[type="submit"]');
+        let originalText = btn ? btn.innerHTML : '';
+        
+        if (btn) {
+            btn.innerHTML = `<svg style="animation: spin 1s linear infinite; width:16px; height:16px" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Processando...`;
+            btn.disabled = true;
+        }
+
+        try {
+            let response = await fetch(form.action, {
+                method: form.method || 'POST',
+                body: new FormData(form),
+                headers: { 'X-Requested-With': 'XMLHttpRequest' }
+            });
+            
+            if (response.ok || response.redirected) {
+                // Fetch the new HTML and replace the content area to prevent reload flash
+                let text = await response.text();
+                let doc = new DOMParser().parseFromString(text, 'text/html');
+                document.querySelector('.content-area').innerHTML = doc.querySelector('.content-area').innerHTML;
+                
+                // Manually fire the toast since we bypassed full load
+                Toast.fire({ icon: 'success', title: 'Atualizado com sucesso!' });
+            }
+        } catch (error) {
+            Toast.fire({ icon: 'error', title: 'Ocorreu um erro.' });
+            if (btn) { btn.innerHTML = originalText; btn.disabled = false; }
+        }
+    }
 });
 </script>
+<style>
+@keyframes spin { to { transform: rotate(360deg); } }
+</style>
 </body>
 </html>

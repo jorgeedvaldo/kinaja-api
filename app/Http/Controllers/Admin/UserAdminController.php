@@ -15,17 +15,16 @@ class UserAdminController extends Controller
             abort(403, 'Apenas administradores podem ver utilizadores.');
         }
 
-        $role = $request->query('role');
-
         $query = User::with(['driver', 'restaurants'])->latest();
 
-        if ($role) {
-            $query->where('role', $role);
-        }
+        $query->when($request->filled('role'), fn($q) => $q->where('role', $request->role))
+              ->when($request->filled('status'), fn($q) => $q->where('status', $request->status))
+              ->when($request->filled('created_from'), fn($q) => $q->whereDate('created_at', '>=', $request->created_from))
+              ->when($request->filled('created_to'), fn($q) => $q->whereDate('created_at', '<=', $request->created_to));
 
-        $users = $query->paginate(30);
+        $users = $query->paginate(30)->withQueryString();
 
-        return view('admin.users.index', compact('users', 'role'));
+        return view('admin.users.index', compact('users'));
     }
 
     public function updateStatus(Request $request, User $user)

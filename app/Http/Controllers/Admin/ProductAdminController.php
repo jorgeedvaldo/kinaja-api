@@ -20,24 +20,21 @@ class ProductAdminController extends Controller
             $restaurants = $user->restaurants()->orderBy('name')->get();
         }
 
-        $selectedRestaurantId = $request->query('restaurant_id', $restaurants->first()->id ?? null);
+        $query = Product::with(['category', 'restaurant']);
 
-        $products = collect();
-        if ($selectedRestaurantId) {
-            // Verify ownership if not admin
-            if (!$user->isAdmin()) {
-                $restaurant = $user->restaurants()->find($selectedRestaurantId);
-                if (!$restaurant) {
-                    abort(403, 'Não autorizado.');
-                }
-            }
-            $products = Product::where('restaurant_id', $selectedRestaurantId)
-                ->with('category')
-                ->orderBy('name')
-                ->get();
+        if (!$user->isAdmin()) {
+            $restaurantIds = $restaurants->pluck('id');
+            $query->whereIn('restaurant_id', $restaurantIds);
         }
 
-        return view('admin.products.index', compact('restaurants', 'products', 'selectedRestaurantId'));
+        $query->when($request->filled('restaurant_id'), fn($q) => $q->where('restaurant_id', $request->restaurant_id))
+              ->when($request->filled('category_id'), fn($q) => $q->where('category_id', $request->category_id))
+              ->when($request->filled('is_available'), fn($q) => $q->where('is_available', $request->is_available));
+
+        $products = $query->orderBy('name')->paginate(30)->withQueryString();
+        $categories = Category::orderBy('name')->get();
+
+        return view('admin.products.index', compact('restaurants', 'categories', 'products'));
     }
 
     public function create(Request $request)

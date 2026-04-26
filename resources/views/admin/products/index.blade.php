@@ -4,29 +4,52 @@
 @section('title', 'Produtos')
 
 @section('content')
-<div class="flex items-center justify-between mb-16 flex-wrap gap-8">
-    <div class="flex items-center gap-8">
-        <label class="fw-600 text-sm">Restaurante:</label>
-        <form method="GET" action="{{ route('admin.products.index') }}" style="margin:0;display:flex;align-items:center;gap:8px">
-            <select name="restaurant_id" class="table-filter" onchange="this.form.submit()">
+<div class="table-card" style="margin-bottom: 24px; padding: 16px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+        <span class="table-title" style="margin: 0;">Gestão de Produtos</span>
+        <a href="{{ route('admin.products.create', ['restaurant_id' => request('restaurant_id')]) }}" class="btn btn-primary">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Novo Produto
+        </a>
+    </div>
+    <form method="GET" action="{{ route('admin.products.index') }}" style="margin:0; background: #f8fafc; padding: 16px; border-radius: 8px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; align-items: end;">
+        <div>
+            <label class="text-sm fw-600 text-muted" style="display:block; margin-bottom:4px">Restaurante</label>
+            <select name="restaurant_id" class="table-filter" style="width:100%">
+                <option value="">Todos</option>
                 @foreach($restaurants as $r)
-                <option value="{{ $r->id }}" {{ $selectedRestaurantId == $r->id ? 'selected' : '' }}>{{ $r->name }}</option>
+                <option value="{{ $r->id }}" {{ request('restaurant_id') == $r->id ? 'selected' : '' }}>{{ $r->name }}</option>
                 @endforeach
             </select>
-        </form>
-    </div>
-    @if($selectedRestaurantId)
-    <a href="{{ route('admin.products.create', ['restaurant_id' => $selectedRestaurantId]) }}" class="btn btn-primary">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-        Novo Produto
-    </a>
-    @endif
+        </div>
+        <div>
+            <label class="text-sm fw-600 text-muted" style="display:block; margin-bottom:4px">Categoria</label>
+            <select name="category_id" class="table-filter" style="width:100%">
+                <option value="">Todas</option>
+                @foreach($categories as $c)
+                <option value="{{ $c->id }}" {{ request('category_id') == $c->id ? 'selected' : '' }}>{{ $c->name }}</option>
+                @endforeach
+            </select>
+        </div>
+        <div>
+            <label class="text-sm fw-600 text-muted" style="display:block; margin-bottom:4px">Disponibilidade</label>
+            <select name="is_available" class="table-filter" style="width:100%">
+                <option value="">Todos</option>
+                <option value="1" {{ request('is_available') === '1' ? 'selected' : '' }}>Disponível</option>
+                <option value="0" {{ request('is_available') === '0' ? 'selected' : '' }}>Esgotado</option>
+            </select>
+        </div>
+        <div style="display: flex; gap: 8px;">
+            <button type="submit" class="btn btn-primary" style="flex:1">Filtrar</button>
+            <a href="{{ route('admin.products.index') }}" class="btn btn-secondary">Limpar</a>
+        </div>
+    </form>
 </div>
 
 @if($restaurants->isEmpty())
     <div class="loading-center"><p class="text-muted">Nenhum restaurante encontrado. Crie um restaurante primeiro.</p></div>
 @elseif($products->isEmpty())
-    <div class="table-card"><div class="table-empty">Nenhum produto neste restaurante.</div></div>
+    <div class="table-card"><div class="table-empty">Nenhum produto encontrado com os filtros atuais.</div></div>
 @else
     <div class="table-card">
         <table>
@@ -34,6 +57,7 @@
                 <tr>
                     <th>ID</th>
                     <th>Nome</th>
+                    <th>Restaurante</th>
                     <th>Categoria</th>
                     <th>Preço</th>
                     <th>Disponível</th>
@@ -45,6 +69,7 @@
                 <tr>
                     <td>{{ $product->id }}</td>
                     <td class="fw-600">{{ $product->name }}</td>
+                    <td>{{ $product->restaurant->name ?? '—' }}</td>
                     <td>{{ $product->category->name ?? '—' }}</td>
                     <td class="fw-600">{{ number_format($product->price, 2, ',', '.') }} Kz</td>
                     <td>
@@ -70,6 +95,7 @@
                 @endforeach
             </tbody>
         </table>
+        <div style="padding:16px 24px">{{ $products->links() }}</div>
     </div>
 @endif
 @endsection
