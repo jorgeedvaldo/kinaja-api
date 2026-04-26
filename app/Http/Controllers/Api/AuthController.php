@@ -77,7 +77,7 @@ class AuthController extends Controller
             'email'    => $request->email,
             'password' => Hash::make($request->password),
             'role'     => 'client',
-            'status'   => 'approved',
+            'status'   => 'active',
         ]);
 
         $token = $user->createToken('auth_token')->plainTextToken;
@@ -110,14 +110,11 @@ class AuthController extends Controller
             ], 401);
         }
 
-        if ($user->status === 'pending') {
-            return response()->json(['message' => 'Sua conta ainda não foi ativada. Por favor, aguarde a validação do administrador.'], 403);
-        }
         if ($user->status === 'suspended') {
             return response()->json(['message' => 'Sua conta foi suspensa por um administrador.'], 403);
         }
-        if ($user->status === 'rejected') {
-            return response()->json(['message' => 'O seu registo foi rejeitado por um administrador.'], 403);
+        if ($user->status === 'banned') {
+            return response()->json(['message' => 'A sua conta foi banida permanentemente.'], 403);
         }
 
         $token = $user->createToken('auth_token')->plainTextToken;

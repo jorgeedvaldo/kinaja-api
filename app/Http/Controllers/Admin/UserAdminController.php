@@ -35,7 +35,7 @@ class UserAdminController extends Controller
         }
 
         $validated = $request->validate([
-            'status' => 'required|string|in:pending,approved,rejected,suspended',
+            'status' => 'required|string|in:active,suspended,banned',
         ]);
 
         $user->update([
