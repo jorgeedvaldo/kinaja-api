@@ -15,12 +15,60 @@ class AuthController extends Controller
      */
     public function register(Request $request)
     {
+        $role = $request->role ?? 'client';
+
+        if ($role === 'driver') {
+            $request->validate([
+                'name'  => 'required|string|max:255',
+                'phone' => 'required|string|unique:users,phone|unique:driver_applications,phone',
+                'email' => 'nullable|email|unique:users,email|unique:driver_applications,email',
+                'owns_motorcycle' => 'nullable|boolean',
+            ]);
+
+            $application = \App\Models\DriverApplication::create([
+                'name' => $request->name,
+                'phone' => $request->phone,
+                'email' => $request->email,
+                'owns_motorcycle' => $request->boolean('owns_motorcycle'),
+                'status' => 'pending',
+            ]);
+
+            return response()->json([
+                'message' => 'Candidatura de entregador enviada com sucesso! Aguarde o nosso contacto.',
+                'application' => $application,
+            ], 201);
+        }
+
+        if ($role === 'restaurant_owner') {
+            $request->validate([
+                'name'    => 'required|string|max:255',
+                'phone'   => 'required|string|unique:users,phone|unique:restaurant_applications,phone',
+                'email'   => 'required|email|unique:users,email|unique:restaurant_applications,email',
+                'address' => 'required|string|max:255',
+                'nif'     => 'required|string|max:255',
+            ]);
+
+            $application = \App\Models\RestaurantApplication::create([
+                'name'    => $request->name,
+                'phone'   => $request->phone,
+                'email'   => $request->email,
+                'address' => $request->address,
+                'nif'     => $request->nif,
+                'status'  => 'pending',
+            ]);
+
+            return response()->json([
+                'message' => 'Candidatura de restaurante enviada com sucesso! Aguarde o nosso contacto.',
+                'application' => $application,
+            ], 201);
+        }
+
+        // Default: Client registration
         $request->validate([
             'name'     => 'required|string|max:255',
             'phone'    => 'required|string|unique:users,phone',
             'email'    => 'nullable|email|unique:users,email',
             'password' => ['required', 'confirmed', Password::defaults()],
-            'role'     => 'nullable|string|in:admin,client,driver,restaurant_owner',
         ]);
 
         $user = User::create([
@@ -28,7 +76,8 @@ class AuthController extends Controller
             'phone'    => $request->phone,
             'email'    => $request->email,
             'password' => Hash::make($request->password),
-            'role'     => $request->role ?? 'client',
+            'role'     => 'client',
+            'status'   => 'approved',
         ]);
 
         $token = $user->createToken('auth_token')->plainTextToken;
@@ -59,6 +108,16 @@ class AuthController extends Controller
             return response()->json([
                 'message' => 'E-mail, número ou senha incorrectos.',
             ], 401);
+        }
+
+        if ($user->status === 'pending') {
+            return response()->json(['message' => 'Sua conta ainda não foi ativada. Por favor, aguarde a validação do administrador.'], 403);
+        }
+        if ($user->status === 'suspended') {
+            return response()->json(['message' => 'Sua conta foi suspensa por um administrador.'], 403);
+        }
+        if ($user->status === 'rejected') {
+            return response()->json(['message' => 'O seu registo foi rejeitado por um administrador.'], 403);
         }
 
         $token = $user->createToken('auth_token')->plainTextToken;

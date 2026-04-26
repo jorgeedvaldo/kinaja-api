@@ -617,30 +617,67 @@
             gap: 28px;
         }
 
-        .signup-list {
-            display: grid;
-            gap: 16px;
-            margin: 0;
-            padding: 0;
-            list-style: none;
+        .signup-panel h2 {
+            margin: 0 0 20px;
+            color: var(--dark);
+            font-size: 1.5rem;
+            font-weight: 900;
         }
 
-        .signup-list li {
-            display: flex;
-            gap: 12px;
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
             color: var(--text-secondary);
+            font-size: 0.9rem;
             font-weight: 700;
-            line-height: 1.5;
         }
 
-        .signup-list li::before {
-            content: "";
-            flex: 0 0 auto;
-            width: 10px;
-            height: 10px;
-            margin-top: 7px;
-            border-radius: 50%;
-            background: var(--primary);
+        .form-input {
+            width: 100%;
+            height: 44px;
+            padding: 0 14px;
+            border: 1px solid var(--border-medium);
+            border-radius: 8px;
+            background: var(--background);
+            color: var(--text-primary);
+            font-family: inherit;
+            font-size: 0.95rem;
+            transition: border-color 150ms ease, box-shadow 150ms ease;
+            box-sizing: border-box;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(235, 40, 53, 0.15);
+        }
+
+        .form-message {
+            margin-top: -8px;
+            margin-bottom: 16px;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 0.88rem;
+            font-weight: 600;
+            display: none;
+        }
+
+        .form-message.is-error {
+            display: block;
+            background: #fef2f2;
+            color: #991b1b;
+            border: 1px solid #fecaca;
+        }
+
+        .form-message.is-success {
+            display: block;
+            background: #f0fdf4;
+            color: #166534;
+            border: 1px solid #bbf7d0;
         }
 
         .app-download {
@@ -1361,16 +1398,33 @@
                         </div>
                     </div>
                     <aside class="signup-panel">
-                        <div>
-                            <h2 data-i18n="partner.sideTitle">Como funciona</h2>
-                            <ul class="signup-list">
-                                <li data-i18n="partner.step1">Registamos o seu restaurante ou loja.</li>
-                                <li data-i18n="partner.step2">Configuramos menu, produtos e zonas de entrega.</li>
-                                <li data-i18n="partner.step3">Come&ccedil;a a receber pedidos com acompanhamento.</li>
-                            </ul>
-                        </div>
-                        <a class="btn btn-primary" href="mailto:parceiros@kinaja.ao" data-i18n="partner.email">Contactar
-                            equipa</a>
+                        <form id="partnerForm" class="registration-form" onsubmit="submitRegistration(event, 'restaurant_owner')">
+                            <h2 data-i18n="partner.formTitle">Crie a sua conta de parceiro</h2>
+                            <div class="form-group">
+                                <label data-i18n="form.name">Nome do Estabelecimento</label>
+                                <input type="text" name="name" class="form-input" required>
+                            </div>
+                            <div class="form-group">
+                                <label data-i18n="form.phone">Telefone</label>
+                                <input type="text" name="phone" class="form-input" required>
+                            </div>
+                            <div class="form-group">
+                                <label data-i18n="form.email">E-mail</label>
+                                <input type="email" name="email" class="form-input">
+                            </div>
+                            <div class="form-group">
+                                <label data-i18n="form.address">Endereço</label>
+                                <input type="text" name="address" class="form-input" required>
+                            </div>
+                            <div class="form-group">
+                                <label data-i18n="form.nif">NIF</label>
+                                <input type="text" name="nif" class="form-input" required>
+                            </div>
+                            
+                            <div class="form-message" id="partnerMessage"></div>
+                            
+                            <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 8px;" data-i18n="partner.submitBtn">Registar Parceiro</button>
+                        </form>
                     </aside>
                 </div>
             </section>
@@ -1385,16 +1439,32 @@
                         </div>
                     </div>
                     <aside class="signup-panel">
-                        <div>
-                            <h2 data-i18n="careers.sideTitle">Vagas abertas</h2>
-                            <ul class="signup-list">
-                                <li data-i18n="careers.role1">Estafetas parceiros</li>
-                                <li data-i18n="careers.role2">Suporte ao cliente</li>
-                                <li data-i18n="careers.role3">Opera&ccedil;&otilde;es e expans&atilde;o</li>
-                            </ul>
-                        </div>
-                        <a class="btn btn-primary" href="mailto:carreiras@kinaja.ao" data-i18n="careers.email">Enviar
-                            candidatura</a>
+                        <form id="driverForm" class="registration-form" onsubmit="submitRegistration(event, 'driver')">
+                            <h2 data-i18n="careers.formTitle">Registe-se como Entregador</h2>
+                            <div class="form-group">
+                                <label data-i18n="form.nameFull">Nome Completo</label>
+                                <input type="text" name="name" class="form-input" required>
+                            </div>
+                            <div class="form-group">
+                                <label data-i18n="form.phone">Telefone</label>
+                                <input type="text" name="phone" class="form-input" required>
+                            </div>
+                            <div class="form-group">
+                                <label data-i18n="form.emailOpt">E-mail (Opcional)</label>
+                                <input type="email" name="email" class="form-input">
+                            </div>
+                            <div class="form-group">
+                                <label data-i18n="form.ownsMotorcycle">Possui mota própria?</label>
+                                <select name="owns_motorcycle" class="form-input" required style="appearance: auto;">
+                                    <option value="1" data-i18n="form.yes">Sim</option>
+                                    <option value="0" data-i18n="form.no">Não</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-message" id="driverMessage"></div>
+                            
+                            <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 8px;" data-i18n="careers.submitBtn">Candidatar-se</button>
+                        </form>
                     </aside>
                 </div>
             </section>
@@ -1544,6 +1614,18 @@
                 'home.card3.text': 'Acompanha cada pedido desde a preparação até à porta.',
                 'home.cardLink': 'Explorar →',
                 'home.card3.link': 'Juntar à equipa →',
+                'partner.formTitle': 'Crie a sua conta de parceiro',
+                'form.name': 'Nome do Estabelecimento',
+                'form.nameFull': 'Nome Completo',
+                'form.phone': 'Telefone',
+                'form.email': 'E-mail',
+                'form.emailOpt': 'E-mail (Opcional)',
+                'form.address': 'Endereço',
+                'form.nif': 'NIF',
+                'form.ownsMotorcycle': 'Possui mota própria?',
+                'form.yes': 'Sim',
+                'form.no': 'Não',
+                'partner.submitBtn': 'Registar Parceiro',
                 'partner.panelTitle': 'Venda mais sem complicar a operação.',
                 'partner.panelLead': 'Publique o seu catálogo, receba pedidos e alcance clientes que querem comprar agora.',
                 'partner.sideTitle': 'Como funciona',
@@ -1551,6 +1633,8 @@
                 'partner.step2': 'Configuramos menu, produtos e zonas de entrega.',
                 'partner.step3': 'Começa a receber pedidos com acompanhamento.',
                 'partner.email': 'Contactar equipa',
+                'careers.formTitle': 'Registe-se como Entregador',
+                'careers.submitBtn': 'Candidatar-se',
                 'careers.panelTitle': 'Constrói a entrega que move a cidade.',
                 'careers.panelLead': 'Estamos a juntar operadores, suporte, tecnologia e estafetas para criar uma experiência melhor em Angola.',
                 'careers.sideTitle': 'Vagas abertas',
@@ -1618,6 +1702,18 @@
                 'home.card3.text': 'Track every order from preparation to your door.',
                 'home.cardLink': 'Explore →',
                 'home.card3.link': 'Join the team →',
+                'partner.formTitle': 'Create your partner account',
+                'form.name': 'Establishment Name',
+                'form.nameFull': 'Full Name',
+                'form.phone': 'Phone Number',
+                'form.email': 'Email',
+                'form.emailOpt': 'Email (Optional)',
+                'form.address': 'Address',
+                'form.nif': 'Tax ID (NIF)',
+                'form.ownsMotorcycle': 'Do you own a motorcycle?',
+                'form.yes': 'Yes',
+                'form.no': 'No',
+                'partner.submitBtn': 'Register Partner',
                 'partner.panelTitle': 'Sell more without complicating operations.',
                 'partner.panelLead': 'Publish your catalog, receive orders, and reach customers ready to buy now.',
                 'partner.sideTitle': 'How it works',
@@ -1625,6 +1721,8 @@
                 'partner.step2': 'We configure menu, products, and delivery zones.',
                 'partner.step3': 'You start receiving tracked orders.',
                 'partner.email': 'Contact the team',
+                'careers.formTitle': 'Register as a Courier',
+                'careers.submitBtn': 'Apply now',
                 'careers.panelTitle': 'Build the delivery network that moves the city.',
                 'careers.panelLead': 'We are bringing together operations, support, technology, and couriers to build a better experience in Angola.',
                 'careers.sideTitle': 'Open roles',
@@ -1717,6 +1815,56 @@
         }
 
         setLanguage(savedLanguage);
+
+        async function submitRegistration(event, role) {
+            event.preventDefault();
+            const form = event.target;
+            const formData = new FormData(form);
+            const data = Object.fromEntries(formData.entries());
+            data.role = role;
+
+            const msgEl = form.querySelector('.form-message');
+            const submitBtn = form.querySelector('button[type="submit"]');
+            const originalBtnText = submitBtn.textContent;
+
+            msgEl.className = 'form-message';
+            msgEl.textContent = '';
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'A processar...';
+
+            try {
+                const response = await fetch('/api/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+
+                if (response.ok || response.status === 201) {
+                    form.reset();
+                    msgEl.textContent = result.message || 'Registo efetuado com sucesso! Aguarde validação.';
+                    msgEl.classList.add('is-success');
+                } else {
+                    let errorMsg = result.message || 'Erro ao efetuar registo.';
+                    if (result.errors) {
+                        const firstErrorKey = Object.keys(result.errors)[0];
+                        errorMsg = result.errors[firstErrorKey][0];
+                    }
+                    msgEl.textContent = errorMsg;
+                    msgEl.classList.add('is-error');
+                }
+            } catch (err) {
+                msgEl.textContent = 'Erro de conexão. Tente novamente.';
+                msgEl.classList.add('is-error');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalBtnText;
+            }
+        }
     </script>
 </body>
 

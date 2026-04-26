@@ -5,6 +5,12 @@
 
 @php
     $roleLabels = ['admin'=>'Administrador','client'=>'Cliente','driver'=>'Entregador','restaurant_owner'=>'Dono Restaurante'];
+    $statusLabels = [
+        'pending' => ['label' => 'Pendente', 'color' => 'warning'],
+        'approved' => ['label' => 'Aprovado', 'color' => 'success'],
+        'rejected' => ['label' => 'Rejeitado', 'color' => 'danger'],
+        'suspended' => ['label' => 'Suspenso', 'color' => 'secondary'],
+    ];
 @endphp
 
 @section('content')
@@ -24,7 +30,7 @@
     </div>
     @if($users->count())
     <table>
-        <thead><tr><th>ID</th><th>Nome</th><th>Telefone</th><th>E-mail</th><th>Role</th><th>Registo</th></tr></thead>
+        <thead><tr><th>ID</th><th>Nome</th><th>Telefone</th><th>E-mail</th><th>Role</th><th>Status</th><th>Registo</th><th>Ações</th></tr></thead>
         <tbody>
             @foreach($users as $u)
             <tr>
@@ -33,7 +39,34 @@
                 <td>{{ $u->phone ?? '—' }}</td>
                 <td class="text-sm">{{ $u->email ?? '—' }}</td>
                 <td><span class="badge badge-{{ $u->role }}">{{ $roleLabels[$u->role] ?? $u->role }}</span></td>
+                <td>
+                    @php $sInfo = $statusLabels[$u->status ?? 'approved'] ?? ['label' => $u->status, 'color' => 'secondary']; @endphp
+                    <span class="badge badge-{{ $sInfo['color'] }}">{{ $sInfo['label'] }}</span>
+                    @if($u->status_updated_by)
+                        <div class="text-sm text-muted mt-1" style="font-size:0.75rem">por Admin #{{ $u->status_updated_by }}</div>
+                    @endif
+                </td>
                 <td class="text-sm text-muted">{{ $u->created_at->format('d/m/Y H:i') }}</td>
+                <td>
+                    @if(!$u->isAdmin() && $u->role !== 'client')
+                        <form action="{{ route('admin.users.updateStatus', $u) }}" method="POST" style="display:inline-flex; gap: 4px;">
+                            @csrf
+                            @method('PATCH')
+                            
+                            @if($u->status !== 'approved')
+                                <button type="submit" name="status" value="approved" class="btn btn-primary" style="padding: 4px 8px; font-size: 0.8rem; min-height: 28px;">Aprovar</button>
+                            @endif
+
+                            @if($u->status === 'pending')
+                                <button type="submit" name="status" value="rejected" class="btn btn-secondary" style="padding: 4px 8px; font-size: 0.8rem; min-height: 28px; background: #fee2e2; border-color: #fca5a5; color: #991b1b;">Rejeitar</button>
+                            @endif
+
+                            @if($u->status === 'approved')
+                                <button type="submit" name="status" value="suspended" class="btn btn-secondary" style="padding: 4px 8px; font-size: 0.8rem; min-height: 28px;">Suspender</button>
+                            @endif
+                        </form>
+                    @endif
+                </td>
             </tr>
             @endforeach
         </tbody>

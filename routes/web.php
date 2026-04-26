@@ -75,4 +75,5 @@ Route::prefix('admin')->middleware(['auth', 'admin.role'])->group(function () {
 
     // Users (admin only — extra check inside controller)
     Route::get('/users', [UserAdminController::class, 'index'])->name('admin.users.index');
+    Route::patch('/users/{user}/status', [UserAdminController::class, 'updateStatus'])->name('admin.users.updateStatus');
 });

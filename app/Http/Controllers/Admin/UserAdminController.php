@@ -27,4 +27,23 @@ class UserAdminController extends Controller
 
         return view('admin.users.index', compact('users', 'role'));
     }
+
+    public function updateStatus(Request $request, User $user)
+    {
+        if (!$request->user()->isAdmin()) {
+            abort(403, 'Apenas administradores podem alterar o status.');
+        }
+
+        $validated = $request->validate([
+            'status' => 'required|string|in:pending,approved,rejected,suspended',
+        ]);
+
+        $user->update([
+            'status'            => $validated['status'],
+            'status_updated_by' => $request->user()->id,
+            'status_updated_at' => now(),
+        ]);
+
+        return redirect()->back()->with('success', 'Status do utilizador atualizado com sucesso.');
+    }
 }

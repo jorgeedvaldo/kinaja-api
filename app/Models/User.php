@@ -24,6 +24,9 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
+        'status',
+        'status_updated_by',
+        'status_updated_at',
     ];
 
     /**
@@ -43,6 +46,7 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'status_updated_at' => 'datetime',
     ];
 
     // ─── Relationships ──────────────────────────────────────────────────
@@ -69,6 +73,16 @@ class User extends Authenticatable
     public function orders(): HasMany
     {
         return $this->hasMany(Order::class, 'client_id');
+    }
+
+    // ─── Relationships ──────────────────────────────────────────────────
+
+    /**
+     * Get the user who last updated the status.
+     */
+    public function statusUpdater(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(User::class, 'status_updated_by');
     }
 
     // ─── Helpers ────────────────────────────────────────────────────────
